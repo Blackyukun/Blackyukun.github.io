@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wyukun.coding.me/"/>
-  <updated>2017-08-30T09:13:21.753Z</updated>
+  <updated>2017-09-15T11:54:32.003Z</updated>
   <id>https://wyukun.coding.me/</id>
   
   <author>
@@ -17,20 +17,27 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://wyukun.coding.me/2017/08/30/hello-world/"/>
-    <id>https://wyukun.coding.me/2017/08/30/hello-world/</id>
-    <published>2017-08-30T07:05:34.650Z</published>
-    <updated>2017-08-30T09:13:21.753Z</updated>
+    <title>五月的事</title>
+    <link href="https://wyukun.coding.me/2017/09/15/%E4%BA%94%E6%9C%88%E7%9A%84%E4%BA%8B/"/>
+    <id>https://wyukun.coding.me/2017/09/15/五月的事/</id>
+    <published>2017-09-15T11:43:14.000Z</published>
+    <updated>2017-09-15T11:54:32.003Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.<br><a id="more"></a></p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p>之前无聊的时候写过很多博客，但是那时候这个网站还没有上线，大多博客都写在知乎上。但是一些牢骚话自然不会发在知乎的，都是保存了草稿，然后自己删掉，发布的都是Python的分享。毕竟申请的是Python专栏，<a href="https://zhuanlan.zhihu.com/yukun" target="_blank" rel="external">专栏地址</a>。其实这种感觉其实特别难受，好比打了一半的嗝又被咽回去了。</p><p><img src="http://imgout.ph.126.net/55814031/55814031.jpg" alt="image"></p><iframe src="//music.163.com/outchain/player?type=2&amp;id=31445772&amp;auto=0&amp;height=66" width="330" height="86" frameborder="no" marginwidth="0" marginheight="0"></iframe><p>转眼五月就要结束了，时间就像一匹欢快的小马，你永远抓不住他的尾巴。人家说天上一日，地上一年，大概就是说快乐地时光总是过得很快。上一次有时间的概念是网站备案的时候，阿里云说要等十几天才能备案成功，我才感觉时间漫长。一天一天过去，备案的十几天似乎还很遥远。可渐渐的忘记这件事的时候，时间的小马就匆匆跑过来告诉你，十几天又过去了，备案通过了，马上到六月了。</p><p>回想这个月，我也想不到自己到底干了些什么。处了这个网站成功上线，在知乎写了两篇博客，其他都没什么印象。每天重复的3点式生活占去了大部分记忆。不过也很好，毕竟这样也让我少去很多不必要的打扰。这个月窝在宿舍倒是把廖雪峰JavaScript的教程看了一遍，也算不枉这个月的时光。写到这我突然明白，如果一直这样与美丽的姑娘们毫无交集，可能就永远单身了=。=。</p><p>这个月开始天气开始热起来，越来越有夏天的感觉了。天气一热，心就开始浮躁，连看一部完整电影的耐心都没有。希望今后能静下心来，非宁静无以致远吗。毕竟专业课还有很多作业要补，下个月在不全部上交估计这门课要挂，欠下的总是要还的，这话说的一点没错。</p><p>今天是五月二十五日，在过五天就是端午节，虽然不会有多少人可以看到，我还是要提前衷心的祝大家端午快乐。</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+      
+      
+        &lt;p&gt;之前无聊的时候写过很多博客，但是那时候这个网站还没有上线，大多博客都写在知乎上。但是一些牢骚话自然不会发在知乎的，都是保存了草稿，然后自己删掉，发布的都是Python的分享。毕竟申请的是Python专栏，&lt;a href=&quot;https://zhuanlan.zhihu.com
+      
     
     </summary>
     
+      <category term="生活" scheme="https://wyukun.coding.me/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="随笔" scheme="https://wyukun.coding.me/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
