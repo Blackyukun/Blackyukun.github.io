@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,爬虫," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="意外" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="由于拉钩网页面做了一些更新，之前的程序无法正常工作，本篇文章做一次更新。只更新一些程序和一些程序的实现方法。由于没有仔细修改，可能前后语言不通顺，大家谅解。  大家好，几天没有更新了。相信大家经过前两篇的练手爬虫，大家已经知道如何抓取一个简单网站。 这篇文章我们来抓取 拉钩网 的招聘信息。全部抓取大概十几万条全国招聘信息，并且保存数据库。">
+<meta name="keywords" content="Python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫(7):多进程抓取拉钩网十万数据">
+<meta property="og:url" content="https://wyukun.coding.me/2017/06/12/Python爬虫七之多进程抓取拉钩网十万数据/index.html">
+<meta property="og:site_name" content="意外">
+<meta property="og:description" content="由于拉钩网页面做了一些更新，之前的程序无法正常工作，本篇文章做一次更新。只更新一些程序和一些程序的实现方法。由于没有仔细修改，可能前后语言不通顺，大家谅解。  大家好，几天没有更新了。相信大家经过前两篇的练手爬虫，大家已经知道如何抓取一个简单网站。 这篇文章我们来抓取 拉钩网 的招聘信息。全部抓取大概十几万条全国招聘信息，并且保存数据库。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://imgout.ph.126.net/56100044/lagou1.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56111019/lagou2.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56111020/lagou3.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56111021/lagou4.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56126036/lagou5.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56749148/lag.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56760100/laaa.jpg">
+<meta property="og:updated_time" content="2017-09-16T08:16:27.501Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python爬虫(7):多进程抓取拉钩网十万数据">
+<meta name="twitter:description" content="由于拉钩网页面做了一些更新，之前的程序无法正常工作，本篇文章做一次更新。只更新一些程序和一些程序的实现方法。由于没有仔细修改，可能前后语言不通顺，大家谅解。  大家好，几天没有更新了。相信大家经过前两篇的练手爬虫，大家已经知道如何抓取一个简单网站。 这篇文章我们来抓取 拉钩网 的招聘信息。全部抓取大概十几万条全国招聘信息，并且保存数据库。">
+<meta name="twitter:image" content="http://imgout.ph.126.net/56100044/lagou1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wyukun.coding.me/2017/06/12/Python爬虫七之多进程抓取拉钩网十万数据/"/>
+
+
+
+
+
+  <title>Python爬虫(7):多进程抓取拉钩网十万数据 | 意外</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">意外</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">俞坤的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wyukun.coding.me/2017/06/12/Python爬虫七之多进程抓取拉钩网十万数据/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="俞坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="意外">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python爬虫(7):多进程抓取拉钩网十万数据</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T15:50:39+08:00">
+                2017-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"> 阅读次数</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>由于拉钩网页面做了一些更新，之前的程序无法正常工作，本篇文章做一次更新。只更新一些程序和一些程序的实现方法。由于没有仔细修改，可能前后语言不通顺，大家谅解。</p>
+</blockquote>
+<p>大家好，几天没有更新了。相信大家经过前两篇的练手爬虫，大家已经知道如何抓取一个简单网站。</p>
+<p>这篇文章我们来抓取 <a href="https://www.lagou.com/" target="_blank" rel="external">拉钩网</a> 的招聘信息。全部抓取大概十几万条全国招聘信息，并且保存数据库。<br><a id="more"></a></p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="安装Mongodb数据库"><a href="#安装Mongodb数据库" class="headerlink" title="安装Mongodb数据库"></a>安装Mongodb数据库</h3><p>其实不是一定要使用<code>MongoDB</code>，大家完全可以使用<code>MySQL</code>或者<code>Redis</code>，全看大家喜好。这篇文章我们的例子是<code>Mongodb</code>，所以大家需要 <a href="https://www.mongodb.com/" target="_blank" rel="external">下载</a> 它。</p>
+<p>在<code>Windows</code>中。由于<code>MongoDB</code>默认的数据目录为<code>C:\data\db</code>，建议大家直接在安装的时候更改默认路径为<code>C:\MongoDB</code>.</p>
+<p>然后创建如下目录文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\data\log\mongod.log  //用于存储数据库的日志</div><div class="line">C:\data\db    //用于存储数据库数据</div></pre></td></tr></table></figure>
+<p>然后在<code>C:\MongoDB</code>文件夹下（安装 Mongodb 路径）创建配置文件<code>mongod.cfg</code>。并且在配置文件里写入以下配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">systemLog:</div><div class="line"> destination: file</div><div class="line"> path: C:\data\log\mongod.log</div><div class="line">storage:</div><div class="line"> dbPath: C:\data\db</div></pre></td></tr></table></figure>
+<p>大家记住要打开文件后缀名，不然我们可能创建了一个<code>mongod.cfg.txt</code>文件。</p>
+<p>最后我们需要打开管理员权限的 CMD 窗口，执行如下命令，安装数据库成服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;C:\mongodb\bin\mongod.exe&quot; --config &quot;C:\mongodb\mongod.cfg&quot; --install</div></pre></td></tr></table></figure>
+<p>设置为服务后，需要在管理员权限打开的<code>windows cmd</code>窗口用服务的方式启动或停止<code>MongoDB</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">net start mongodb    //启动mongodb服务</div><div class="line">net stop mongodb     //关闭mongodb服务</div></pre></td></tr></table></figure>
+<p>好了，安装好<code>Mongodb</code>数据库后，我们需要安装<code>PyMongo</code>，它是<code>MongoDB</code>的<code>Python</code>接口开发包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install pymongo</div></pre></td></tr></table></figure>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>准备完成后，我们就开始浏览拉勾网。我们可以发现拉勾网所有的招聘职位都在左侧分类里。如图：</p>
+<p><img src="http://imgout.ph.126.net/56100044/lagou1.jpg" alt="image"></p>
+<p>我们先获取首页HTML文件:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> RequestException</div><div class="line"></div><div class="line">url = <span class="string">'https://www.lagou.com/'</span></div><div class="line"><span class="comment"># 获取页面源码函数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_page_resp</span><span class="params">(url)</span>:</span></div><div class="line">    headers = &#123;<span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'</span>&#125;</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        resp = requests.get(url, headers=headers)</div><div class="line">        <span class="keyword">if</span> resp.status_code == <span class="number">200</span>:</div><div class="line">            <span class="keyword">return</span> resp.text</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">    <span class="keyword">except</span> RequestException:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line"></div><div class="line">soup = BeautifulSoup(get_page_resp(url), <span class="string">'lxml'</span>)</div></pre></td></tr></table></figure>
+<p>然后我们打开开发者工具，找到招聘职业的位置。</p>
+<p><img src="http://imgout.ph.126.net/56111019/lagou2.jpg" alt="image"></p>
+<p>大家还记得BeautifulSoup的CSS选择器吧，我们直接使用<code>.select()</code>方法获取标签信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">all_positions = soup.select(<span class="string">'div.menu_sub.dn &gt; dl &gt; dd &gt; a'</span>)</div><div class="line">print(all_positions)</div><div class="line">print(len(all_positions))</div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[&lt;a class="curr" href="https://www.lagou.com/zhaopin/Java/" data-lg-tj-cid="idnull" data-lg-tj-id="4O00" data-lg-tj-no="0101"&gt;Java&lt;/a&gt;, &lt;a class="curr" href="https://www.lagou.com/zhaopin/C%2B%2B/" data-lg-tj-cid="idnull" data-lg-tj-id="4O00" data-lg-tj-no="0102"&gt;C++&lt;/a&gt;, # ... 省略部分 &lt;a class="" href="https://www.lagou.com/zhaopin/fengxiankongzhizongjian/" data-lg-tj-cid="idnull" data-lg-tj-id="4U00" data-lg-tj-no="0404"&gt;风控总监&lt;/a&gt;, &lt;a class="" href="https://www.lagou.com/zhaopin/zongcaifuzongcai/" data-lg-tj-cid="idnull" data-lg-tj-id="4U00" data-lg-tj-no="0405"&gt;副总裁&lt;/a&gt;] </div><div class="line"><span class="number">260</span></div></pre></td></tr></table></figure>
+<p>获取到所有职位标签的<code>a</code>标签后，我们只需要提取标签的<code>href</code>属性和标签内内容，就可以获得到职位的招聘链接和招聘职位的名称了。我们准备信息生成一个字典。方便我们后续程序的调用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 解析首页获得所有职位信息的函数</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_index</span><span class="params">()</span>:</span></div><div class="line">    url = <span class="string">'https://www.lagou.com/'</span></div><div class="line">    soup = BeautifulSoup(get_html(url), <span class="string">'lxml'</span>)</div><div class="line">    all_positions = soup.select(<span class="string">'div.menu_sub.dn &gt; dl &gt; dd &gt; a'</span>)</div><div class="line">    joburls = [i[<span class="string">'href'</span>] <span class="keyword">for</span> i <span class="keyword">in</span> all_positions]</div><div class="line">    jobnames = [i.get_text() <span class="keyword">for</span> i <span class="keyword">in</span> all_positions]</div><div class="line"></div><div class="line">    <span class="keyword">for</span> joburl, jobname <span class="keyword">in</span> zip(joburls, jobnames):</div><div class="line">        data = &#123;</div><div class="line">            <span class="string">'url'</span> : joburl,</div><div class="line">            <span class="string">'name'</span> : jobname</div><div class="line">        &#125;</div><div class="line">        <span class="comment"># 这里使用yield语法糖，不熟悉的同学自己查看资料哦</span></div><div class="line">        <span class="keyword">yield</span> data</div></pre></td></tr></table></figure>
+<p>这里我们用<code>zip</code>函数，同时迭代两个<code>list</code>。生成一个键值对。</p>
+<p>接下来我们可以随意点击一个职位分类，分析招聘页面的信息。</p>
+<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>我们首先来分析下网站页数信息。经过我的观察，每个职位的招聘信息最多不超过 30 页。也就是说，我们只要从第 1 页循环到第 30 页，就可以得到所有招聘信息了。但是也可以看到有的职位招聘信息，页数并不到 30 页。以下图为例：</p>
+<p><img src="http://imgout.ph.126.net/56111020/lagou3.jpg" alt="image"></p>
+<p>如果我们访问页面：<code>https://www.lagou.com/zhaopin/Java/31/</code></p>
+<p>也就是第 31 页。我们会得到 404 页面。所以我们需要在访问到404页面时进行过滤。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> resp.status_code == <span class="number">404</span>:</div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>这样我们就可以放心的 30 页循环获得每一页招聘信息了。</p>
+<p>我们的每一页<code>url</code>使用<code>format</code>拼接出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">link = <span class="string">'&#123;&#125;&#123;&#125;/'</span>.format(url, str(pages))</div></pre></td></tr></table></figure>
+<h2 id="获取信息"><a href="#获取信息" class="headerlink" title="获取信息"></a>获取信息</h2><p><img src="http://imgout.ph.126.net/56111021/lagou4.jpg" alt="image"></p>
+<p>我们可以看到上面划线的信息。这就是我们要抓取的信息了。</p>
+<p>当然。抓取的方法千篇一律，我们可以使用<code>find()</code>或<code>find_all()</code></p>
+<p>选择器，当然也可以使用 CSS选择器。但是 CSS选择器相对于前两者代码量稍微少一些。这里大家自己动手抓取，我们直接上代码供大家借鉴。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 职位信息 </span></div><div class="line">positions = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_top &gt; div.position &gt; div.p_top &gt; a &gt; h3'</span>) </div><div class="line"><span class="comment"># 工作地址 </span></div><div class="line">adds = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_top &gt; div.position &gt; div.p_top &gt; a &gt; span &gt; em'</span>) </div><div class="line"><span class="comment"># 发布时间 </span></div><div class="line">publishs = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_top &gt; div.position &gt; div.p_top &gt; span'</span>) </div><div class="line"><span class="comment"># 薪资信息</span></div><div class="line"> moneys = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_top &gt; div.position &gt; div.p_bot &gt; div &gt; span'</span>) </div><div class="line"><span class="comment"># 工作需求 </span></div><div class="line">needs = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_top &gt; div.position &gt; div.p_bot &gt; div'</span>) </div><div class="line"><span class="comment"># 发布公司 </span></div><div class="line">companys = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_top &gt; div.company &gt; div.company_name &gt; a'</span>) </div><div class="line">tags = [] </div><div class="line"><span class="comment"># 由于我发现有的招聘信息没有标签信息，if判断防止没有标签报错 </span></div><div class="line"><span class="keyword">if</span> soup.find(<span class="string">'div'</span>, class_=<span class="string">'li_b_l'</span>): </div><div class="line">    <span class="comment"># 招聘信息标签 </span></div><div class="line">    tags = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_bot &gt; div.li_b_l'</span>) </div><div class="line"><span class="comment"># 公司福利 </span></div><div class="line">fulis = soup.select(<span class="string">'ul &gt; li &gt; div.list_item_bot &gt; div.li_b_r'</span>)</div></pre></td></tr></table></figure>
+<p>获取到全部信息后，我们同样的把他们组成键值对字典。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> position,add,publish,money,need,company,tag,fuli <span class="keyword">in</span> \</div><div class="line">        zip(positions,adds,publishs,moneys,needs,companys,tags,fulis):</div><div class="line">    data = &#123;</div><div class="line">        <span class="string">'position'</span> : position.get_text(),</div><div class="line">        <span class="string">'add'</span> : add.get_text(),</div><div class="line">        <span class="string">'publish'</span> : publish.get_text(),</div><div class="line">        <span class="string">'money'</span> : money.get_text(),</div><div class="line">        <span class="string">'need'</span> : need.get_text().split(<span class="string">'\n'</span>)[<span class="number">2</span>],</div><div class="line">        <span class="string">'company'</span> : company.get_text(),</div><div class="line">        <span class="string">'tag'</span> : tag.get_text().replace(<span class="string">'\n'</span>,<span class="string">'-'</span>),</div><div class="line">        <span class="string">'fuli'</span> : fuli.get_text()</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>组成字典的目的是方便我们将全部信息保存到数据库。</p>
+<h2 id="保存数据库"><a href="#保存数据库" class="headerlink" title="保存数据库"></a>保存数据库</h2><p>保存数据库前我们需要配置数据库信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"></div><div class="line">client = pymongo.MongoClient(<span class="string">'localhost'</span>, <span class="number">27017</span>)</div><div class="line">lagou = client[<span class="string">'lagou'</span>]</div><div class="line">url_list = lagou[<span class="string">'url_list'</span>]</div></pre></td></tr></table></figure>
+<p>这里我们导入了<code>pymongo</code>库，并且与<code>MongoDB</code>建立连接，这里是默认连接本地的<code>MongoDB</code>数据。创建并选择一个数据库<code>lagou</code>，并在这个数据库中，创建一个<code>table</code>，即<code>url_list</code>。然后，我们进行数据的保存：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> url_list.insert_one(data):</div><div class="line">    print(<span class="string">'保存数据库成功'</span>, data)</div></pre></td></tr></table></figure>
+<p>如果保存成功，打印出成功信息。</p>
+<h2 id="多进程抓取"><a href="#多进程抓取" class="headerlink" title="多进程抓取"></a>多进程抓取</h2><p>十万多条数据是不是抓取的有点慢，有办法，我们使用多进程同时抓取。由于<code>Python</code>的历史遗留问题，多线程在<code>Python</code>中始终是个美丽的梦。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(pages)</span>:</span></div><div class="line">    datas = parse_index()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> datas:</div><div class="line">        url = i[<span class="string">'url'</span>]</div><div class="line">        print(url)</div><div class="line">        mongo_table = i[<span class="string">'name'</span>]</div><div class="line">        <span class="comment"># 因为有的职位是以'.'开头的，比如.Net，数据库表名不能以.开头</span></div><div class="line">        <span class="keyword">if</span> mongo_table[<span class="number">0</span>] == <span class="string">'.'</span>:</div><div class="line">            mongo_table = mongo_table[<span class="number">1</span>:]</div><div class="line">        <span class="comment"># 我们把之前抓取职位所有招聘信息的程序整理为parse_link()函数</span></div><div class="line">        <span class="comment"># 这个函数接收职位url，页码，和数据库表名为参数</span></div><div class="line">        parse_link(url, pages, mongo_table)</div></pre></td></tr></table></figure>
+<p>我们把之前提取职位招聘信息的代码，写成一个函数，方便我们调用。这里的<code>parse_link()</code>就是这个函数，他就收职位的 url 和所有页数为参数。我们<code>get_alllink_data()</code>函数里面使用<code>for</code>循环 30 页的数据。然后这个作为主函数传给多进程内部调用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    pool = Pool(processes=<span class="number">6</span>)</div><div class="line">    pages = ([p <span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">31</span>)])</div><div class="line">    pool.map(main,pages)</div><div class="line">    pool.close() </div><div class="line">    pool.join()</div></pre></td></tr></table></figure>
+<p>这里是一个<code>pool</code>进程池，我们调用进程池的<code>map</code>方法.</p>
+<p><code>map(func, iterable[,chunksize=None])</code></p>
+<p>多进程<code>Pool</code>类中的<code>map</code>方法，与<code>Python</code>内置的<code>map</code>函数用法行为基本一致。它会使进程阻塞，直到返回结果。需要注意，虽然第二个参数是一个迭代器，但在实际使用中，必须在整个队列都就绪后，程序才会运行子进程。<code>join()</code></p>
+<p>方法等待子进程结束后再继续往下运行，通常用于进程间的同步.</p>
+<h2 id="针对反爬"><a href="#针对反爬" class="headerlink" title="针对反爬"></a>针对反爬</h2><p>如果大家就这样整理完代码，直接就开始抓取的话。相信在抓取的不久后就会出现程序中止不走了。我刚刚第一次中止后，我以为是网站限制了我的 ip。于是我做了如下改动。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line">user_agent_list = [</div><div class="line">    <span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'</span>,</div><div class="line">    <span class="string">' Mozilla/5.0 (Windows; U; Windows NT 5.2) Gecko/2008070208 Firefox/3.0.1'</span>,</div><div class="line">    <span class="string">'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.2)'</span></div><div class="line">]</div><div class="line">user_agent = random.choice(user_agent_list)</div><div class="line">headers  = &#123;</div><div class="line">    <span class="string">'User-Agent'</span>:user_agent,</div><div class="line">    <span class="string">'Connection'</span>:<span class="string">'keep-alive'</span></div><div class="line">&#125;</div><div class="line">proxy_list = [</div><div class="line">    <span class="string">'http://140.224.76.21:808'</span>,</div><div class="line">    <span class="string">'http://60.178.14.90:8081'</span>,</div><div class="line">    <span class="string">'http://121.232.146.13:9000'</span>,</div><div class="line">    ]</div><div class="line">proxy_ip = random.choice(proxy_list)</div><div class="line">proxies = &#123;<span class="string">'http'</span>: proxy_ip&#125;</div><div class="line">resp = requests.get(url, headers=headers, proxies=proxies)</div><div class="line">time.sleep(<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>这里我是直接在在网上找了一些免费的<code>ip</code>，还自己找了几个浏览器的<code>user-agent</code>。利用<code>Python</code>内置的<code>random</code>库，开始随机选择列表里的<code>user-agent</code>和<code>ip</code>。并且将参数传入<code>requests</code>内继续抓取。为了防止请求频率过快，我们设置每次请求结束停留一秒。然后我以为问题这么结束了。就开始继续抓取，但是在之前中断的位置突然有中断了。</p>
+<p>于是，我在代码抓取信息位置添加了一句打印<code>url</code>的代码。我得到了中断爬取的<code>url</code>，然后我手动多点进去，发现了这个网页。当然出现这个情况并不是更换<code>ip</code>不可以，而是我们的ip太少了，一个<code>ip</code>可能仍然出现多次抓取的情况，后续我将会和大家一起写一个自己的<code>ip</code>代理池。</p>
+<p><img src="http://imgout.ph.126.net/56126036/lagou5.jpg" alt="image"></p>
+<h2 id="模拟登录"><a href="#模拟登录" class="headerlink" title="模拟登录"></a>模拟登录</h2><p>没错这是一个登录界面，不知道是不是这里的浏览器头，或者ip请求过多。如果继续增多<code>ip</code>和<code>user_agent</code>就不会出现这种情况。</p>
+<p>但是如何面对这种需要登录才能持续爬取的网站呢，很简单，我们只要打开浏览器的开发者工具。登录自己的账号，在<code>Network</code>标签找一个请求，查看你的请求头部信息，找到自己的<code>cookies</code>。这个<code>cookies</code>就是你的登录信息了，我们需要将他和你的<code>user-agent</code>一样，添加到请求头就可以了。如果大家不明白这个<code>cookies</code>是什么，没关系，后面会有专门的讲解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Cookie'</span>:<span class="string">'user_trace_token=20170603115043-d0c257a054ee44f99177a3540d44dda1; LGUID=20170603115044-d1e2b4d1-480f-11e7-96cf-525400f775ce; JSESSIONID=ABAAABAAAGHAABHAA8050BE2E1D33E6C2A80E370FE9167B; _gat=1; PRE_UTM=; PRE_HOST=; PRE_SITE=; PRE_LAND=https%3A%2F%2Fwww.lagou.com%2F; index_location_city=%E5%85%A8%E5%9B%BD; login=false; unick=""; _putrc=""; _ga=GA1.2.922290439.1496461627; X_HTTP_TOKEN=3876430f68ebc0ae0b8fac6c9f163d45; _ga=GA1.3.922290439.1496461627; LGSID=20170720174323-df1d6e50-6d2f-11e7-ac93-5254005c3644; LGRID=20170720174450-12fc5214-6d30-11e7-b32f-525400f775ce; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1500541369; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1500543655'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>好了我们继续抓取，发现这次程序并没有中止。<del>~但是由于博主网速过慢，抓取太慢了，还没有全部抓取下来，不知道后面会不会出现问题。</del>~</p>
+<p><strong>这次更新，我是完全抓取玩全站才过来的，没错我已经抓取了全部的信息。用时1412 .9008133411407 秒。</strong></p>
+<p><img src="http://imgout.ph.126.net/56749148/lag.jpg" alt="image"></p>
+<p>好了，说了这么多，基本也都说完了。</p>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p>对整理代码有疑惑的伙伴可以点击 <a href="https://github.com/Blackyukun/LaGou" target="_blank" rel="external">这里</a>。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>这是我已经抓取的一部分。这里如果大家希望看到<code>Mongodb</code>数据库里的保存内容。</p>
+<p>我们需要安装一个<code>Mongodb</code>可视化应用 <a href="https://robomongo.org/" target="_blank" rel="external">robomango</a>。</p>
+<p>安装没什么要说的，大家链接到我们的<code>lagou</code>数据库，就可以看到里面的数据了。</p>
+<p><img src="http://imgout.ph.126.net/56760100/laaa.jpg" alt="image"></p>
+<p>如果博主后面把全部数据抓下来后，可以和大家一起进行数据分析，分析<code>Python</code>招聘的一些信息啊什么的。大家加油。</p>
+<p>谢谢阅读</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>真诚赞赏，手留余香</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="俞坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="俞坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    俞坤
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wyukun.coding.me/2017/06/12/Python爬虫七之多进程抓取拉钩网十万数据/" title="Python爬虫(7):多进程抓取拉钩网十万数据">https://wyukun.coding.me/2017/06/12/Python爬虫七之多进程抓取拉钩网十万数据/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/04/Python爬虫六之煎蛋网全站妹子图爬虫/" rel="next" title="Python爬虫(6):煎蛋网全站妹子图爬虫">
+                <i class="fa fa-chevron-left"></i> Python爬虫(6):煎蛋网全站妹子图爬虫
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/15/返老还童/" rel="prev" title="返老还童">
+                返老还童 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="俞坤" />
+          <p class="site-author-name" itemprop="name">俞坤</p>
+           
+              <p class="site-description motion-element" itemprop="description">克制力，执行力</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Blackyukun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/yu-kun-73/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.yukunweb.com/" title="俞坤的博客" target="_blank">俞坤的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Mongodb数据库"><span class="nav-number">1.1.</span> <span class="nav-text">安装Mongodb数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页"><span class="nav-number">3.</span> <span class="nav-text">分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取信息"><span class="nav-number">4.</span> <span class="nav-text">获取信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存数据库"><span class="nav-number">5.</span> <span class="nav-text">保存数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程抓取"><span class="nav-number">6.</span> <span class="nav-text">多进程抓取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#针对反爬"><span class="nav-number">7.</span> <span class="nav-text">针对反爬</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟登录"><span class="nav-number">8.</span> <span class="nav-text">模拟登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目地址"><span class="nav-number">9.</span> <span class="nav-text">项目地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">10.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">俞坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"> 访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
