@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://imgout.ph.126.net/56711076/guoke3.jpg">
 <meta property="og:image" content="http://imgout.ph.126.net/56710039/guoke6.jpg">
 <meta property="og:image" content="http://imgout.ph.126.net/56710040/guoke5.jpg">
-<meta property="og:updated_time" content="2017-09-16T08:51:59.869Z">
+<meta property="og:updated_time" content="2017-09-16T08:53:45.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python爬虫(8):分析Ajax请求爬取果壳网">
 <meta name="twitter:description" content="本篇文章我们来研究一下怎么分析网页的Ajax请求。 我们在平时爬取网页的时候，可能都遇到过有些网页直接请求得到的 HTML 代码里面，并没有我们需要的数据，也就是我们在浏览器中看到的内容。 这就是因为这些信息是通过Ajax加载的，并且通过js渲染生成的。这个时候我们就需要分析这个网页的请求了。">
@@ -430,11 +430,11 @@
 <h3 id="那我们要怎么获得所有页的数据呢？"><a href="#那我们要怎么获得所有页的数据呢？" class="headerlink" title="那我们要怎么获得所有页的数据呢？"></a>那我们要怎么获得所有页的数据呢？</h3><p>我们在<code>Chrome</code>中打开开发者工具<code>(F12)</code>。我们点击<code>Network</code>，点击<code>XHR</code>标签。然后我们刷新网页，往下拉请求。这个时候我们就可以看到<code>XHR</code>标签，在网页每一次加载的时候就会跳出一个请求。</p>
 <p>我们点击第一个请求，可以看到他的参数：</p>
 <blockquote>
-<p>retrieve_type:by<em>subject<br>limit:20<br>offset:18<br>`</em>`:1500265766286</p>
+<p>retrieve_type:by<em>subject<br>limit:20<br>offset:18<br>\</em>:1500265766286</p>
 </blockquote>
 <p>在点击第二个请求，参数如下：</p>
 <blockquote>
-<p>retrieve_type:by<em>subject<br>limit:20<br>offset:38<br>`</em>`:1500265766287</p>
+<p>retrieve_type:by<em>subject<br>limit:20<br>offset:38<br>\</em>:1500265766287</p>
 </blockquote>
 <p><code>limit</code>参数是网页每一页限制加载的文章数，<code>offset</code>就是页数了。接着往下看，我们会发现每一个请求的<code>offset</code>参数都会加 20。</p>
 <p>我们接着看每一个请求的响应内容，这是一个就是格式的数据。我们点开<code>result</code>键，可以看到一个 20 篇文章的数据信息。这样我们就成功找到我们需要的信息位置了，我们可以在请求头中看到存放<code>json</code>数据的<code>url</code>地址。<code>http://www.guokr.com/apis/minisite/article.json?retrieve_type=by_subject&amp;amp;limit=20&amp;amp;offset=18</code></p>
