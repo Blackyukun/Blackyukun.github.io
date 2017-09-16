@@ -78,12 +78,10 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Python,爬虫," />
 
 
 
-
-  
 
 
   <link rel="alternate" href="/atom.xml" title="Always" type="application/atom+xml" />
@@ -98,17 +96,18 @@
 
 
 
-<meta name="description" content="介绍这里是我闲暇时，对于大脑内充斥的幻想的记录。 想写一本小说(捂脸)。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="https://wyukun.coding.me/about/index.html">
+<meta name="description" content="上一篇文章我们整理了Requests库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。 这一篇文章我们来 看一下Requests库的高级操作。">
+<meta name="keywords" content="Python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫(3):Requests的高级用法">
+<meta property="og:url" content="https://wyukun.coding.me/2017/05/29/Python爬虫三之Requests的高级用法/index.html">
 <meta property="og:site_name" content="Always">
-<meta property="og:description" content="介绍这里是我闲暇时，对于大脑内充斥的幻想的记录。 想写一本小说(捂脸)。">
+<meta property="og:description" content="上一篇文章我们整理了Requests库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。 这一篇文章我们来 看一下Requests库的高级操作。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-30T14:08:36.000Z">
+<meta property="og:updated_time" content="2017-09-16T04:47:15.344Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于">
-<meta name="twitter:description" content="介绍这里是我闲暇时，对于大脑内充斥的幻想的记录。 想写一本小说(捂脸)。">
+<meta name="twitter:title" content="Python爬虫(3):Requests的高级用法">
+<meta name="twitter:description" content="上一篇文章我们整理了Requests库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。 这一篇文章我们来 看一下Requests库的高级操作。">
 
 
 
@@ -137,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="https://wyukun.coding.me/about/"/>
+  <link rel="canonical" href="https://wyukun.coding.me/2017/05/29/Python爬虫三之Requests的高级用法/"/>
 
 
 
 
 
-  <title>关于 | Always</title>
+  <title>Python爬虫(3):Requests的高级用法 | Always</title>
   
 
 
@@ -308,35 +307,252 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wyukun.coding.me/2017/05/29/Python爬虫三之Requests的高级用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="俞坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Always">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">关于</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>这里是我闲暇时，对于大脑内充斥的幻想的记录。</p>
-<p>想写一本小说(捂脸)。</p>
-
+          <h1 class="post-title" itemprop="name headline">Python爬虫(3):Requests的高级用法</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-29T23:28:36+08:00">
+                2017-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"> 阅读次数</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>上一篇文章我们整理了<code>Requests</code>库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。</p>
+<p>这一篇文章我们来 看一下<code>Requests</code>库的高级操作。<br><a id="more"></a></p>
+<h2 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h2><h3 id="1-文件上传"><a href="#1-文件上传" class="headerlink" title="1.文件上传"></a>1.文件上传</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">files = &#123;<span class="string">'file'</span> : open(<span class="string">'logo.gif'</span>,<span class="string">'rb'</span>)&#125;</div><div class="line">resp = requests.post(<span class="string">'http://httpbin.org/post'</span>, files=files)</div><div class="line">print(resp.text)</div></pre></td></tr></table></figure>
+<p>文件上传的操作只要我们从文件夹中把文件读取出来，并且赋值给 files 参数，就可以了，打印出源代码我们就可以看待上传文件的字节流了。</p>
+<h3 id="2-获取Cookie"><a href="#2-获取Cookie" class="headerlink" title="2.获取Cookie"></a>2.获取Cookie</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">import</span> requests</div><div class="line"></div><div class="line">&gt;&gt;&gt;resp = requests.get(<span class="string">'http://www.baidu.com'</span>)</div><div class="line">&gt;&gt;&gt;print(resp.cookies)</div><div class="line">&lt;RequestsCookieJar[]&gt;</div><div class="line">&gt;&gt;&gt;<span class="keyword">for</span> key, value <span class="keyword">in</span> resp.cookies.items():</div><div class="line"><span class="meta">... </span>   print(key + <span class="string">'='</span> + value)</div><div class="line">BDORZ=<span class="number">27315</span></div></pre></td></tr></table></figure>
+<p>我们可以通过获取字典的键值对来查看<code>cookie</code>.</p>
+<h3 id="3-会话维持"><a href="#3-会话维持" class="headerlink" title="3.会话维持"></a>3.会话维持</h3><p>我们获得到了<code>cookie</code>就可以做一个会话维持，可以维持一个登录的状态，也就是做模拟登录。我们来看实现方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">s = requests.Session()</div><div class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/number/123456789'</span>) <span class="comment"># 设置了一个cookie</span></div><div class="line">resp = s.get(<span class="string">'http://httpbin.org/cookies'</span>)</div><div class="line">print(resp.text)</div></pre></td></tr></table></figure>
+<p>这就相当于模拟了一个会话，比如做登陆验证，可以用<code>session</code>，POST 一下，登陆一下，然后保持会话信息，在访问登录过页面的话，就可以正常获取登录后的页面了。如果你要模拟登录，可以通过申明<code>Session</code>对象，再用<code>Session</code>对象发起两次get请求，那么这两次请求相当于在一个浏览器里面，先访问<code>set cookie</code>页面，在访问<code>get cookie</code>页面。当然，<code>cookie</code>是自动处理的，不需要担心写一些处理<code>cookies</code>的方法。</p>
+<p>建议模拟登录用<code>requests</code>的<code>Session</code>对象。</p>
+<h3 id="4-SSL证书验证"><a href="#4-SSL证书验证" class="headerlink" title="4.SSL证书验证"></a>4.SSL证书验证</h3><p><code>Requests</code>可以为 HTTPS 请求验证 SSL 证书，就像 web浏览器一样。要想检查某个主机的 SSL证书，你可以使用 verify参数:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">import</span> requests</div><div class="line"></div><div class="line">&gt;&gt;&gt;requests.get(<span class="string">'https://kennethreitz.com'</span>, verify=<span class="keyword">True</span>) <span class="comment"># verify参数默认值为True</span></div><div class="line">requests.exceptions.SSLError: hostname <span class="string">'kennethreitz.com'</span> doesn<span class="string">'t match either of '</span>*.herokuapp.com<span class="string">', '</span>herokuapp.com<span class="string">'</span></div></pre></td></tr></table></figure>
+<p>如果不想他报这个错误，我们可以把参数<code>verify</code>的值设为<code>False</code>.运行后发现程序没有报错，但是会出现警告信息，警告我们要验证 SSL证书。如果要消除这个警告，我们需要调用原生包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">import</span> requests</div><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> requests.packages <span class="keyword">import</span> urllib3</div><div class="line"></div><div class="line">urllib3.disable_warnings()</div><div class="line">&gt;&gt;&gt;requests.get(<span class="string">'https://kennethreitz.com'</span>, verify=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<p>我们还可以自己指定一个证书：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">import</span> requests</div><div class="line"></div><div class="line">&gt;&gt;&gt;resp = requests.get(<span class="string">'https://kennethreitz.com'</span>, cert=(<span class="string">'/path/server.crt'</span>, <span class="string">'/path/key'</span>))</div><div class="line">&gt;&gt;&gt;print(resp.status_code)</div><div class="line"><span class="number">200</span></div></pre></td></tr></table></figure>
+<h3 id="5-代理设置"><a href="#5-代理设置" class="headerlink" title="5.代理设置"></a>5.代理设置</h3><p>有些网站会限制 IP 访问频率，超过频率就断开连接。这个时候我们就需要使用到代理，我们可以通过为任意请求方式提供<code>proxies</code>参数来配置单个请求。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">proxies = &#123;</div><div class="line">    <span class="string">"http"</span>: <span class="string">"http://10.10.1.10:3128"</span>,</div><div class="line">    <span class="string">"https"</span>: <span class="string">"http://10.10.1.10:1080"</span>,</div><div class="line">&#125;</div><div class="line">resp = requests.get(<span class="string">'http://www.baidu.com'</span>, proxies=proxies)</div><div class="line">print(resp.status_code)</div></pre></td></tr></table></figure>
+<p>也可以通过环境变量 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code> 来配置代理。<br>有些代理需要加上用户名和密码的，代理可以使用<code>http://user:password@host/</code>语法，比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">proxies = &#123;</div><div class="line">    <span class="string">"http"</span>: <span class="string">"http://user:pass@10.10.1.10:3128/"</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除了基本的 HTTP代理，<code>Requests</code>还支持<code>SOCKS</code>协议的代理，如果需要用的，可以安装带三方库：</p>
+<figure class="highlight plain"><figcaption><span>pip install requests[socks]```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">安装好依赖以后，使用 SOCKS 代理和使用 HTTP 代理一样简单：</div><div class="line"></div><div class="line">```Python</div><div class="line">proxies = &#123;</div><div class="line">    &quot;http&quot;: &apos;socks5://user:pass@host:port&apos;,</div><div class="line">    &quot;https&quot;: &apos;socks5://user:pass@host:port&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="6-超时设置"><a href="#6-超时设置" class="headerlink" title="6.超时设置"></a>6.超时设置</h3><p>超时设置就是设置请求的时间，如果在规定的时间内没有返回应答，就抛出异常.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">resp = requests.get(<span class="string">'http://www.baidu.com'</span>, timeout=<span class="number">0.5</span>)</div><div class="line">print(resp.status_code)</div></pre></td></tr></table></figure>
+<p>如果在0.5秒内没有返回，就会报出<code>ReadTimeout</code>的异常。<br>如果远端服务器很慢，你可以让<code>Request</code>永远等待，传入一个<code>None</code>作为<code>timeout</code>值，然后就冲咖啡去吧。</p>
+<h3 id="7-认证设置"><a href="#7-认证设置" class="headerlink" title="7.认证设置"></a>7.认证设置</h3><p>有一些网站在访问的时候需要我们输入用户名和密码，那么这种网站我们要怎样处理呢。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> requests.auth <span class="keyword">import</span> HTTPBasicAuth</div><div class="line"></div><div class="line">resp = requests.get(url, auth=HTTPBasicAuth(<span class="string">'username'</span>,<span class="string">'password'</span>))</div><div class="line">print(resp.status_code)</div></pre></td></tr></table></figure>
+<p>调用<code>HTTPBasicAuth</code>类，直接传入用户名和密码就可以了。</p>
+<h3 id="8-异常处理"><a href="#8-异常处理" class="headerlink" title="8.异常处理"></a>8.异常处理</h3><p>如果你遇到无法访问的网站，或者是你的网速不够快，你的访问超时，就会导致程序的中断。显然我们在实际的抓取中不愿意看到爬取到一半的程序突然中断的情况，那么我们能够避免这种程序中断的情况吗，答案是肯定的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> ReadTimeout, ConnectionError, RequestException</div><div class="line"></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    resp = requests.get(<span class="string">'http://httpbin.org/get'</span>, timeout=<span class="number">0.5</span>)</div><div class="line">    print(resp.status_code)</div><div class="line"><span class="keyword">except</span> ReadTimeout： <span class="comment"># 访问超时的错误</span></div><div class="line">    print(<span class="string">'Timeout'</span>)</div><div class="line"><span class="keyword">except</span> ConnectionError: <span class="comment"># 网络中断连接错误</span></div><div class="line">    print(<span class="string">'Connect error'</span>)</div><div class="line"><span class="keyword">except</span> RequestException: <span class="comment"># 父类错误</span></div><div class="line">    print(<span class="string">'Error'</span>)</div></pre></td></tr></table></figure>
+<p>这样我们就可以把<code>requests</code>抓取过程中常见的异常都处理捕获了，捕获错误应该先捕获子类异常在捕获父类异常，这样做能够更加直观清楚的应对程序中出现的错误了。</p>
+<p>如果我们能够自己捕获了这些异常，就可以保证我们的爬虫一直运行了。</p>
+<p>好了，<code>Requests</code>的大部分用法已经全部说完了，大家是否已经学会了这门屠龙之术了呢。快找个网页练练手吧。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>真诚赞赏，手留余香</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="俞坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="俞坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    俞坤
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wyukun.coding.me/2017/05/29/Python爬虫三之Requests的高级用法/" title="Python爬虫(3):Requests的高级用法">https://wyukun.coding.me/2017/05/29/Python爬虫三之Requests的高级用法/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/29/Python爬虫二之Requests的基本用法/" rel="next" title="Python爬虫(2):Requests的基本用法">
+                <i class="fa fa-chevron-left"></i> Python爬虫(2):Requests的基本用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -496,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#高级操作"><span class="nav-number">1.</span> <span class="nav-text">高级操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-文件上传"><span class="nav-number">1.1.</span> <span class="nav-text">1.文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-获取Cookie"><span class="nav-number">1.2.</span> <span class="nav-text">2.获取Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-会话维持"><span class="nav-number">1.3.</span> <span class="nav-text">3.会话维持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-SSL证书验证"><span class="nav-number">1.4.</span> <span class="nav-text">4.SSL证书验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-代理设置"><span class="nav-number">1.5.</span> <span class="nav-text">5.代理设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-超时设置"><span class="nav-number">1.6.</span> <span class="nav-text">6.超时设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-认证设置"><span class="nav-number">1.7.</span> <span class="nav-text">7.认证设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-异常处理"><span class="nav-number">1.8.</span> <span class="nav-text">8.异常处理</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -642,10 +858,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
