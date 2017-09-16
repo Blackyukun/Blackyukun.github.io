@@ -84,7 +84,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="Always" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="意外" type="application/atom+xml" />
 
 
 
@@ -101,10 +101,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python爬虫(3):Requests的高级用法">
 <meta property="og:url" content="https://wyukun.coding.me/2017/05/29/Python爬虫三之Requests的高级用法/index.html">
-<meta property="og:site_name" content="Always">
+<meta property="og:site_name" content="意外">
 <meta property="og:description" content="上一篇文章我们整理了Requests库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。 这一篇文章我们来 看一下Requests库的高级操作。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-16T04:47:15.344Z">
+<meta property="og:updated_time" content="2017-09-16T04:56:30.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python爬虫(3):Requests的高级用法">
 <meta name="twitter:description" content="上一篇文章我们整理了Requests库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。 这一篇文章我们来 看一下Requests库的高级操作。">
@@ -142,7 +142,7 @@
 
 
 
-  <title>Python爬虫(3):Requests的高级用法 | Always</title>
+  <title>Python爬虫(3):Requests的高级用法 | 意外</title>
   
 
 
@@ -178,7 +178,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Always</span>
+        <span class="site-title">意外</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -328,7 +328,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Always">
+      <meta itemprop="name" content="意外">
     </span>
 
     
@@ -434,7 +434,9 @@
 <p>也可以通过环境变量 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code> 来配置代理。<br>有些代理需要加上用户名和密码的，代理可以使用<code>http://user:password@host/</code>语法，比如：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">proxies = &#123;</div><div class="line">    <span class="string">"http"</span>: <span class="string">"http://user:pass@10.10.1.10:3128/"</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>除了基本的 HTTP代理，<code>Requests</code>还支持<code>SOCKS</code>协议的代理，如果需要用的，可以安装带三方库：</p>
-<figure class="highlight plain"><figcaption><span>pip install requests[socks]```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">安装好依赖以后，使用 SOCKS 代理和使用 HTTP 代理一样简单：</div><div class="line"></div><div class="line">```Python</div><div class="line">proxies = &#123;</div><div class="line">    &quot;http&quot;: &apos;socks5://user:pass@host:port&apos;,</div><div class="line">    &quot;https&quot;: &apos;socks5://user:pass@host:port&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install requests[socks]</div></pre></td></tr></table></figure>
+<p>安装好依赖以后，使用 SOCKS 代理和使用 HTTP 代理一样简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">proxies = &#123;</div><div class="line">    <span class="string">"http"</span>: <span class="string">'socks5://user:pass@host:port'</span>,</div><div class="line">    <span class="string">"https"</span>: <span class="string">'socks5://user:pass@host:port'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="6-超时设置"><a href="#6-超时设置" class="headerlink" title="6.超时设置"></a>6.超时设置</h3><p>超时设置就是设置请求的时间，如果在规定的时间内没有返回应答，就抛出异常.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">resp = requests.get(<span class="string">'http://www.baidu.com'</span>, timeout=<span class="number">0.5</span>)</div><div class="line">print(resp.status_code)</div></pre></td></tr></table></figure>
 <p>如果在0.5秒内没有返回，就会报出<code>ReadTimeout</code>的异常。<br>如果远端服务器很慢，你可以让<code>Request</code>永远等待，传入一个<code>None</code>作为<code>timeout</code>值，然后就冲咖啡去吧。</p>
@@ -535,6 +537,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/06/01/Python爬虫四之BeautifulSoup的常用方法/" rel="prev" title="Python爬虫(4):Beautiful Soup的常用方法">
+                Python爬虫(4):Beautiful Soup的常用方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -610,7 +616,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
