@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://imgout.ph.126.net/55981022/QQCDBCC6AC20170603171444.jpg">
 <meta property="og:image" content="http://imgout.ph.126.net/55981045/QQCDBCC6AC20170603171452.jpg">
-<meta property="og:updated_time" content="2017-09-16T07:29:31.964Z">
+<meta property="og:updated_time" content="2017-09-16T09:04:48.237Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python爬虫(5):豆瓣读书练手爬虫">
 <meta name="twitter:description" content="我们在之前的文章中基本上掌握了Python爬虫的原理和方法，不知道大家有没有练习呢。今天我就来找一个简单的网页进行爬取，就当是给之前的兵书做一个实践。不然不就是纸上谈兵的赵括了吗。 好了，我们这次的目标是豆瓣图书Top250，地址是：https://book.douban.com/top250?start=0">
@@ -428,7 +428,7 @@
 <p><img src="http://imgout.ph.126.net/55981045/QQCDBCC6AC20170603171452.jpg" alt="image"></p>
 <p>可以看到书名信息包含在<code>class=&#39;pl2&#39;</code> <code>div</code>里面的<code>a</code>标签内，是<code>a</code>标签的<code>title</code>属性。发现目标位置后，就简单多了。我们利用<code>BeautifulSoup</code>来获得一个对象，按找标准的缩进显示的<code>html</code>代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"></div><div class="line">soup = BeautifulSoup(resp.text, <span class="string">'lxml'</span>)</div></pre></td></tr></table></figure>
-<p>推荐大家使用lxml解析器，因为他快。如果安装lxml遇到问题的可以参考 <a href="http://www.yukunweb.com/276.html" target="_blank" rel="external">上一篇文章</a> 的方法。当然，如果大家怕麻烦，也完全可以使用Python的内置标准库<code>html.parser</code>.对我们获得结果并没有影响。</p>
+<p>推荐大家使用lxml解析器，因为他快。如果安装lxml遇到问题的可以参考 <a href="https://yukunweb.com/2017/06/01/Python%E7%88%AC%E8%99%AB%E5%9B%9B%E4%B9%8BBeautifulSoup%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/" target="_blank" rel="external">上一篇文章</a> 的方法。当然，如果大家怕麻烦，也完全可以使用Python的内置标准库<code>html.parser</code>.对我们获得结果并没有影响。</p>
 <h2 id="开始工作"><a href="#开始工作" class="headerlink" title="开始工作"></a>开始工作</h2><p>现在我们要用到<code>BeautifulSoup</code>的<code>find_all()</code>选择器，因为我们这一页有很多书，而每一本书的信息都包含在<code>class=pl2</code>的<code>div</code>标签内，我们使用<code>find_all()</code>就可以直接得到本页所有书的书名了。我们用<code>find()</code>方法和<code>find_all()</code>方法来做一个比较：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># find_all()方法，</span></div><div class="line"><span class="comment"># 注意class是Python关键词，后面要加下划线_：</span></div><div class="line">alldiv = soup.find_all(<span class="string">'div'</span>, class_=<span class="string">'pl2'</span>)</div><div class="line"><span class="keyword">for</span> a <span class="keyword">in</span> alldiv:</div><div class="line">    names = a.find(<span class="string">'a'</span>)[<span class="string">'title'</span>]</div><div class="line">    print(<span class="string">'find_all():'</span>, names)</div><div class="line"><span class="comment"># find()方法：</span></div><div class="line">alldiv2 = soup.find(<span class="string">'div'</span>, class_=<span class="string">'pl2'</span>)</div><div class="line">names2 = alldiv2.find(<span class="string">'a'</span>)[<span class="string">'title'</span>]</div><div class="line">print(<span class="string">'find():'</span>, names2 )</div></pre></td></tr></table></figure>
 <p>运行结果：</p>
@@ -625,7 +625,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
