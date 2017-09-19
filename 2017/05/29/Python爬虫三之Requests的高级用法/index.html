@@ -413,7 +413,7 @@
       
 
       
-        <p>上一篇文章我们整理了<code>Requests</code>库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。</p>
+        <script src="\assets\js\APlayer.min.js"> </script><p>上一篇文章我们整理了<code>Requests</code>库的基本用法，相信大家已经经过爬取一些简单网页的练习，已经很熟练了。</p>
 <p>这一篇文章我们来 看一下<code>Requests</code>库的高级操作。<br><a id="more"></a></p>
 <h2 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h2><h3 id="1-文件上传"><a href="#1-文件上传" class="headerlink" title="1.文件上传"></a>1.文件上传</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">files = &#123;<span class="string">'file'</span> : open(<span class="string">'logo.gif'</span>,<span class="string">'rb'</span>)&#125;</div><div class="line">resp = requests.post(<span class="string">'http://httpbin.org/post'</span>, files=files)</div><div class="line">print(resp.text)</div></pre></td></tr></table></figure>
 <p>文件上传的操作只要我们从文件夹中把文件读取出来，并且赋值给 files 参数，就可以了，打印出源代码我们就可以看待上传文件的字节流了。</p>
@@ -616,7 +616,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

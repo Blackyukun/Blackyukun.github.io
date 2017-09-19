@@ -418,7 +418,7 @@
       
 
       
-        <p>前两篇文章我们了解了Scrapy的理论知识，那么我们不能做纸上谈兵的赵括。实践才是检验真理的唯一标准。本篇文章我们来抓取网易云音乐的所有音乐及音乐的热评。<br><a id="more"></a></p>
+        <script src="\assets\js\APlayer.min.js"> </script><p>前两篇文章我们了解了Scrapy的理论知识，那么我们不能做纸上谈兵的赵括。实践才是检验真理的唯一标准。本篇文章我们来抓取网易云音乐的所有音乐及音乐的热评。<br><a id="more"></a></p>
 <h2 id="分析站点"><a href="#分析站点" class="headerlink" title="分析站点"></a>分析站点</h2><p>我们打开浏览器，访问网易云音乐的网页端。如果我们想要抓取到所有的音乐，就得有一个切入口，能够获得到所有的音乐数据。</p>
 <p>那么通过观察页面的导航，我们只能通过获取全部的歌手。但是由于歌手详情页并没有全部音乐这个链接，我们只能获取全部的专辑。在通过全部的专辑获得全部的音乐。</p>
 <h2 id="爬虫流程"><a href="#爬虫流程" class="headerlink" title="爬虫流程"></a>爬虫流程</h2><p>以歌手页为索引页，抓取所有的歌手；<br>通过所有的歌手抓取全部专辑；<br>通过全部专辑抓取所有的音乐；<br>分析所有音乐的Ajax，获得所有热评；<br>将音乐名，歌手，专辑，热评，热评作者，热评赞数保存数据库。</p>
@@ -663,7 +663,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
