@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Python,爬虫," />
 
 
 
@@ -96,16 +96,20 @@
 
 
 
-<meta name="description" content="克制力，执行力">
-<meta property="og:type" content="website">
-<meta property="og:title" content="意外">
-<meta property="og:url" content="https://wyukun.coding.me/tags/Flask/index.html">
+<meta name="description" content="大家好，点开文章大家应该可以听到一曲大气恢弘的音乐，仿佛置身于江湖中，而自己是一名行侠仗义的侠客。见多了江湖的纷扰，你早已经累了，功名利禄对你来说不如一壶好酒。你骑马田间，而这时已是傍晚时分，起风了，你看这远方的夕阳，心生感慨。如果当初能够多一点勇气，那么这数十年来就不会是孤身一人了。你叹了口气，猛地抽了自己一巴掌，乱想什么呢，赶紧学习了。 通过上一篇文章，我相信大家对于Scrapy的使用也有了初">
+<meta name="keywords" content="Python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫(12):Scrapy组件的用法">
+<meta property="og:url" content="https://wyukun.coding.me/Python爬虫十二之Scrapy组件的用法.html">
 <meta property="og:site_name" content="意外">
-<meta property="og:description" content="克制力，执行力">
+<meta property="og:description" content="大家好，点开文章大家应该可以听到一曲大气恢弘的音乐，仿佛置身于江湖中，而自己是一名行侠仗义的侠客。见多了江湖的纷扰，你早已经累了，功名利禄对你来说不如一壶好酒。你骑马田间，而这时已是傍晚时分，起风了，你看这远方的夕阳，心生感慨。如果当初能够多一点勇气，那么这数十年来就不会是孤身一人了。你叹了口气，猛地抽了自己一巴掌，乱想什么呢，赶紧学习了。 通过上一篇文章，我相信大家对于Scrapy的使用也有了初">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://imgout.ph.126.net/56888086/scrapy_architecture.jpg">
+<meta property="og:updated_time" content="2017-09-19T07:55:54.368Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="意外">
-<meta name="twitter:description" content="克制力，执行力">
+<meta name="twitter:title" content="Python爬虫(12):Scrapy组件的用法">
+<meta name="twitter:description" content="大家好，点开文章大家应该可以听到一曲大气恢弘的音乐，仿佛置身于江湖中，而自己是一名行侠仗义的侠客。见多了江湖的纷扰，你早已经累了，功名利禄对你来说不如一壶好酒。你骑马田间，而这时已是傍晚时分，起风了，你看这远方的夕阳，心生感慨。如果当初能够多一点勇气，那么这数十年来就不会是孤身一人了。你叹了口气，猛地抽了自己一巴掌，乱想什么呢，赶紧学习了。 通过上一篇文章，我相信大家对于Scrapy的使用也有了初">
+<meta name="twitter:image" content="http://imgout.ph.126.net/56888086/scrapy_architecture.jpg">
 
 
 
@@ -134,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="https://wyukun.coding.me/tags/Flask/"/>
+  <link rel="canonical" href="https://wyukun.coding.me/Python爬虫十二之Scrapy组件的用法.html"/>
 
 
 
 
 
-  <title>标签: Flask | 意外</title>
+  <title>Python爬虫(12):Scrapy组件的用法 | 意外</title>
   
 
 
@@ -165,7 +169,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -303,54 +307,266 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Flask<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wyukun.coding.me/Python爬虫十二之Scrapy组件的用法.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="俞坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="意外">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/我看小说的时候我在看什么.html" itemprop="url">
-              
-                <span itemprop="name">我看小说的时候我在看什么</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Python爬虫(12):Scrapy组件的用法</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-02T17:25:21+08:00"
-              content="2017-08-02" >
-          08-02
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T15:46:06+08:00">
+                2017-07-29
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"> 阅读次数</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>大家好，点开文章大家应该可以听到一曲大气恢弘的音乐，仿佛置身于江湖中，而自己是一名行侠仗义的侠客。见多了江湖的纷扰，你早已经累了，功名利禄对你来说不如一壶好酒。你骑马田间，而这时已是傍晚时分，起风了，你看这远方的夕阳，心生感慨。如果当初能够多一点勇气，那么这数十年来就不会是孤身一人了。你叹了口气，猛地抽了自己一巴掌，乱想什么呢，赶紧学习了。</p>
+<p>通过上一篇文章，我相信大家对于<code>Scrapy</code>的使用也有了初步的了解。如果说要使用<code>Scrapy</code>写一些爬虫，也并非什么难事了。那么为了能写出更加复杂的爬虫，我们在本篇文章就来了解一下<code>Scrapy</code>的组件及他们的用法。</p>
+<p>由于我在浏览<code>Scrapy</code>文档的时候，发现文档说的很是详细，如果我来写这篇文章的话，无疑是班门弄斧。</p>
+<p>所以，本篇文章主要分享一下我在学习<code>Scrapy</code>中对于组件整体运作的理解。<br><a id="more"></a></p>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>Scrapy作为一个框架，整体的组件协作我们还是要做到流程清晰的。我们来看一下经典的Scrapy架构图：</p>
+<p><img src="http://imgout.ph.126.net/56888086/scrapy_architecture.jpg" alt="image"></p>
+<p>我们上一篇文章写的<code>Scrapy</code>项目大致流程就是：</p>
+<ul>
+<li>确定爬虫名称和要抓取的初始网站；</li>
+<li>请求网站获得响应数据<code>Response</code>；</li>
+<li>解析<code>Response</code>提取数据；</li>
+<li>有需要跟进的<code>url</code>继续循环执行第二步；</li>
+<li>将需要的数据通过管道<code>Pipeline</code>的处理；</li>
+<li>处理完的数据传给<code>Item</code>保存。</li>
+</ul>
+<p><strong>图中的Scrapy Engine就是Scrapy的引擎，他处于中间位置，主要负责各个组件之间的通信，数据传递。</strong></p>
+<p><strong>那上图的Spiders就是来完成爬虫的逻辑，还有网页数据的提取。他将要请求的url通过Scrapy Engine引擎，传给Scheduler（调度器）。</strong></p>
+<p><strong>调度器接收了引擎发送来的Requests请求，按顺序排列整理。</strong></p>
+<p><strong>由于所有的数据交流都是要通过引擎的，所以调度器是通过把处理好的Requests有发送给引擎，由引擎通过Downloader Middlewares（下载中间件）发送给Downloader（下载器）。</strong></p>
+<p><strong>下载器通过下载中间件的设置来下载引擎传过来的Requests的url，并且将获取到的Response又发送给引擎（如果有下载失败的Requests，那么下载器会在后面接着下载）。</strong></p>
+<p><strong>引擎收到Response后，再将它发送给Spiders，Spiders对Response解析提取出需要的数据（或者还有需要继续请求的url，会继续执行上面的循环）。</strong></p>
+<p><strong>Spiders将这些数据发送给引擎，最后引擎将这些数据发送给Item Pipeline进行数据处理和存储。</strong></p>
+<p>那么这个流程就结束了。下面我给大家把相应组件还有<code>Scrapy</code>提供的命令行工具的文档地址整理给大家。</p>
+<h2 id="Spiders"><a href="#Spiders" class="headerlink" title="Spiders"></a>Spiders</h2><p>我们上篇文章有用过<code>Spider</code>，就是我们爬虫类的基类。<code>Spider</code>他主要就是来完成爬虫的逻辑，还有网页数据的提取。他将要请求的<code>url</code>通过<code>Scrapy Engine</code>引擎，传给<code>Scheduler</code>（调度器），</p>
+<p>对spider来说，爬取的循环类似下文:</p>
+<p>以初始的<code>URL</code>初始化<code>Request</code>，并设置回调函数。 当该<code>request</code>下载完毕并返回时，将生成<code>response</code>，并作为参数传给该回调函数。</p>
+<p><code>spider</code>中初始的<code>request</code>是通过调用 start_requests() 来获取的。 <code>start_requests()</code>读取 <code>start_urls</code> 中的<code>URL</code>， 并以 <code>parse</code>为回调函数生成<code>Request</code> 。</p>
+<p>在回调函数内分析返回的(网页)内容，返回 <code>Item</code> 对象或者 <code>Request</code> 或者一个包括二者的可迭代容器。 返回的<code>Request</code>对象之后会经过<code>Scrapy</code>处理，下载相应的内容，并调用设置的<code>callback</code>函数(函数可相同)。</p>
+<p>在回调函数内，您可以使用 选择器(<code>Selectors</code>) (您也可以使用BeautifulSoup, lxml 或者您想用的任何解析器) 来分析网页内容，并根据分析的数据生成item。</p>
+<p>最后，由<code>spider</code>返回的<code>item</code>将被存到数据库(由某些 Item Pipeline 处理)或使用 <code>Feed exports</code> 存入到文件中。</p>
+<p>文档地址：<a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/spiders.html#id2" target="_blank" rel="external">here</a></p>
+<h2 id="Item-Pipeline"><a href="#Item-Pipeline" class="headerlink" title="Item Pipeline"></a>Item Pipeline</h2><p>文档地址：<a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/item-pipeline.html#id1" target="_blank" rel="external">here</a></p>
+<h2 id="Downloader-Middleware"><a href="#Downloader-Middleware" class="headerlink" title="Downloader Middleware"></a>Downloader Middleware</h2><p>文档地址：<a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/downloader-middleware.html#downloader-middleware" target="_blank" rel="external">here</a></p>
+<h2 id="Scrapy命令行工具"><a href="#Scrapy命令行工具" class="headerlink" title="Scrapy命令行工具"></a>Scrapy命令行工具</h2><p>文档地址：<a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/commands.html#command-line-tools" target="_blank" rel="external">here</a></p>
+<h2 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h2><p>文档地址：<a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/selectors.html#selectors" target="_blank" rel="external">here</a></p>
+<h2 id="Scrapy源码"><a href="#Scrapy源码" class="headerlink" title="Scrapy源码"></a>Scrapy源码</h2><p>源码地址：<a href="https://github.com/scrapy/scrapy" target="_blank" rel="external">here</a></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>学一个框架最好的方法就是看他的文档和阅读他的源码，如大家认真看完上面的文档，那么对于<code>Scrapy</code>使用基本上是了然于胸了。那么下面的文章我们就来使用<code>Scrapy</code>写一些爬虫，知行合一才是最好的学习方法。</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=28786809&auto=1&height=66"></iframe>
+
+<p>谢谢阅读</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>真诚赞赏，手留余香</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="俞坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="俞坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    俞坤
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wyukun.coding.me/Python爬虫十二之Scrapy组件的用法.html" title="Python爬虫(12):Scrapy组件的用法">https://wyukun.coding.me/Python爬虫十二之Scrapy组件的用法.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Python爬虫十一之Scrapy框架的安装和基本使用.html" rel="next" title="Python爬虫(11):Scrapy框架的安装和基本使用">
+                <i class="fa fa-chevron-left"></i> Python爬虫(11):Scrapy框架的安装和基本使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Python爬虫十三之Scrapy实战抓取网易云音乐.html" rel="prev" title="Python爬虫(13):Scrapy实战抓取网易云音乐">
+                Python爬虫(13):Scrapy实战抓取网易云音乐 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -358,6 +574,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -378,8 +598,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -486,6 +715,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#理解"><span class="nav-number">1.</span> <span class="nav-text">理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spiders"><span class="nav-number">2.</span> <span class="nav-text">Spiders</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Item-Pipeline"><span class="nav-number">3.</span> <span class="nav-text">Item Pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Downloader-Middleware"><span class="nav-number">4.</span> <span class="nav-text">Downloader Middleware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrapy命令行工具"><span class="nav-number">5.</span> <span class="nav-text">Scrapy命令行工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择器"><span class="nav-number">6.</span> <span class="nav-text">选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrapy源码"><span class="nav-number">7.</span> <span class="nav-text">Scrapy源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">8.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -630,10 +875,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 

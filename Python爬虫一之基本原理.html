@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Python,爬虫," />
 
 
 
@@ -96,16 +96,20 @@
 
 
 
-<meta name="description" content="克制力，执行力">
-<meta property="og:type" content="website">
-<meta property="og:title" content="意外">
-<meta property="og:url" content="https://wyukun.coding.me/tags/Flask/index.html">
+<meta name="description" content="大家好，今天周末，希望大家周末愉快。 这篇文章我来梳理一下爬虫的基本原理。用过Python的伙伴都知道Python用来写爬虫是件很简单很爽的事情。但是有些伙伴不了解爬虫到底是什么，会纳闷为什么爬虫要设置什么请求头、请求体啊，到底要怎么样去发送这个请求啊。当然有的伙伴使用过很多爬虫的请求库，解析库，写过很多爬虫，但是可能他们的思路脉络也不是太清晰。那么，这篇文章就来帮大家理清爬虫原理的脉络。">
+<meta name="keywords" content="Python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫(1):基本原理">
+<meta property="og:url" content="https://wyukun.coding.me/Python爬虫一之基本原理.html">
 <meta property="og:site_name" content="意外">
-<meta property="og:description" content="克制力，执行力">
+<meta property="og:description" content="大家好，今天周末，希望大家周末愉快。 这篇文章我来梳理一下爬虫的基本原理。用过Python的伙伴都知道Python用来写爬虫是件很简单很爽的事情。但是有些伙伴不了解爬虫到底是什么，会纳闷为什么爬虫要设置什么请求头、请求体啊，到底要怎么样去发送这个请求啊。当然有的伙伴使用过很多爬虫的请求库，解析库，写过很多爬虫，但是可能他们的思路脉络也不是太清晰。那么，这篇文章就来帮大家理清爬虫原理的脉络。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://imgout.ph.126.net/55876004/spider-1673428_960_720.jpg">
+<meta property="og:updated_time" content="2017-09-16T06:25:37.932Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="意外">
-<meta name="twitter:description" content="克制力，执行力">
+<meta name="twitter:title" content="Python爬虫(1):基本原理">
+<meta name="twitter:description" content="大家好，今天周末，希望大家周末愉快。 这篇文章我来梳理一下爬虫的基本原理。用过Python的伙伴都知道Python用来写爬虫是件很简单很爽的事情。但是有些伙伴不了解爬虫到底是什么，会纳闷为什么爬虫要设置什么请求头、请求体啊，到底要怎么样去发送这个请求啊。当然有的伙伴使用过很多爬虫的请求库，解析库，写过很多爬虫，但是可能他们的思路脉络也不是太清晰。那么，这篇文章就来帮大家理清爬虫原理的脉络。">
+<meta name="twitter:image" content="http://imgout.ph.126.net/55876004/spider-1673428_960_720.jpg">
 
 
 
@@ -134,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="https://wyukun.coding.me/tags/Flask/"/>
+  <link rel="canonical" href="https://wyukun.coding.me/Python爬虫一之基本原理.html"/>
 
 
 
 
 
-  <title>标签: Flask | 意外</title>
+  <title>Python爬虫(1):基本原理 | 意外</title>
   
 
 
@@ -165,7 +169,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -303,54 +307,268 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Flask<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wyukun.coding.me/Python爬虫一之基本原理.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="俞坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="意外">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/我看小说的时候我在看什么.html" itemprop="url">
-              
-                <span itemprop="name">我看小说的时候我在看什么</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Python爬虫(1):基本原理</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-08-02T17:25:21+08:00"
-              content="2017-08-02" >
-          08-02
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-28T22:44:37+08:00">
+                2017-05-28
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"> 阅读次数</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>大家好，今天周末，希望大家周末愉快。</p>
+<p>这篇文章我来梳理一下爬虫的基本原理。用过<code>Python</code>的伙伴都知道<code>Python</code>用来写爬虫是件很简单很爽的事情。但是有些伙伴不了解爬虫到底是什么，会纳闷为什么爬虫要设置什么请求头、请求体啊，到底要怎么样去发送这个请求啊。当然有的伙伴使用过很多爬虫的请求库，解析库，写过很多爬虫，但是可能他们的思路脉络也不是太清晰。那么，这篇文章就来帮大家理清爬虫原理的脉络。<br><a id="more"></a></p>
+<h2 id="什么是爬虫？"><a href="#什么是爬虫？" class="headerlink" title="什么是爬虫？"></a>什么是爬虫？</h2><p><img src="http://imgout.ph.126.net/55876004/spider-1673428_960_720.jpg" alt="spider"></p>
+<p>爬虫即网络爬虫，英文是<code>Web Spider</code>。翻译过来就是网络上爬行的蜘蛛，如果把互联网看作一张大网，那么爬虫就是在大网上爬来爬去的蜘蛛，碰到想要的食物，就把他抓取出来。</p>
+<p>我们在浏览器中输入一个网址，敲击回车，看到网站的页面信息。这就是浏览器请求了网站的服务器，获取到网络资源。那么，爬虫也相当于模拟浏览器发送请求，获得到<code>HTML</code>代码。<code>HTML</code>代码里通常包含了标签和文字信息，我们就从中提取到我们想要的信息。</p>
+<p>通常爬虫是从某个网站的某个页面开始，爬取这个页面的内容，找到网页中的其他链接地址，然后从这个地址爬到下一个页面，这样一直不停的爬下去，进去批量的抓取信息。那么，我们可以看出网络爬虫就是一个不停爬取网页抓取信息的程序。</p>
+<h2 id="爬虫的基本流程"><a href="#爬虫的基本流程" class="headerlink" title="爬虫的基本流程"></a>爬虫的基本流程</h2><h3 id="1-发起请求："><a href="#1-发起请求：" class="headerlink" title="1.发起请求："></a>1.发起请求：</h3><p>通过HTTP库向目标站点发起请求，即发送一个<code>Request</code>，请求可以包含额外的<code>headers</code>等信息，然后等待服务器响应。这个请求的过程就像我们打开浏览器，在浏览器地址栏输入网址：<code>www.baidu.com</code>，然后点击回车。这个过程其实就相当于浏览器作为一个浏览的客户端，向服务器端发送了 一次请求。</p>
+<h3 id="2-获取响应内容："><a href="#2-获取响应内容：" class="headerlink" title="2.获取响应内容："></a>2.获取响应内容：</h3><p>如果服务器能正常响应，我们会得到一个<code>Response</code>，<code>Response</code>的内容便是所要获取的内容，类型可能有<code>HTML</code>、<code>Json</code>字符串，二进制数据(图片，视频等）等类型。这个过程就是服务器接收客户端的请求，进过解析发送给浏览器的网页<code>HTML</code>文件。</p>
+<h3 id="3-解析内容："><a href="#3-解析内容：" class="headerlink" title="3.解析内容："></a>3.解析内容：</h3><p>得到的内容可能是<code>HTML</code>，可以使用正则表达式，网页解析库进行解析。也可能是<code>Json</code>，可以直接转为<code>Json</code>对象解析。可能是二进制数据，可以做保存或者进一步处理。这一步相当于浏览器把服务器端的文件获取到本地，再进行解释并且展现出来。</p>
+<h3 id="4-保存数据："><a href="#4-保存数据：" class="headerlink" title="4.保存数据："></a>4.保存数据：</h3><p>保存的方式可以是把数据存为文本，也可以把数据保存到数据库，或者保存为特定的jpg，mp4 等格式的文件。这就相当于我们在浏览网页时，下载了网页上的图片或者视频。</p>
+<h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><h3 id="1-什么是Request？"><a href="#1-什么是Request？" class="headerlink" title="1.什么是Request？"></a>1.什么是Request？</h3><p>浏览器发送信息给该网址所在的服务器，这个过程就叫做<code>HTTP Request</code>。</p>
+<h3 id="2-Request中包含什么？"><a href="#2-Request中包含什么？" class="headerlink" title="2.Request中包含什么？"></a>2.Request中包含什么？</h3><ul>
+<li>请求方式：请求方式的主要类型是<code>GET</code>，<code>OST</code>两种，另外还有<code>HEAD</code>、<code>PUT</code>、<code>DELETE</code>等。GET 请求的请求参数会显示在URL链接的后面，比如我们打开百度，搜索“图片”，我们会看到请求的URL链接为<code>https://www.baidu.com/s?wd=图片</code>。而 POST 请求的请求参数会存放在<code>Request</code>内，并不会出现在 URL 链接的后面，比如我们登录知乎，输入用户名和密码，我们会看到浏览器开发者工具的<code>Network</code>页，<code>Request</code>请求有<code>Form Data</code>的键值对信息，那里就存放了我们的登录信息，有利于保护我们的账户信息安全；</li>
+<li>请求 URL：URL 全称是统一资源定位符，也就是我们说的网址。比如一张图片，一个音乐文件，一个网页文档等都可以用唯一URL来确定，它包含的信息指出文件的位置以及浏览器应该怎么去处理它；</li>
+<li>请求头<code>(Request Headers)</code>：请求头包含请求时的头部信息，如<code>User-Agent</code>（指定浏览器的请求头），<code>Host</code>，<code>Cookies</code>等信息；</li>
+<li>请求体：请求体是请求是额外携带的数据，比如登录表单提交的登录信息数据。</li>
+</ul>
+<h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><h3 id="1-什么是Response？"><a href="#1-什么是Response？" class="headerlink" title="1.什么是Response？"></a>1.什么是Response？</h3><p>服务器收到浏览器发送的信息后，能够根据浏览器发送信息的内容，做出相应的处理，然后把消息回传给浏览器，这个过程就叫做<code>HTTP Response</code>。</p>
+<h3 id="2-Response中包含什么？"><a href="#2-Response中包含什么？" class="headerlink" title="2.Response中包含什么？"></a>2.Response中包含什么？</h3><ul>
+<li>响应状态：有多种响应状态，比如200代表成功，301 跳转页面，404 表示找不到页面，502 表示服务器错误；</li>
+<li>响应头<code>(Response Headers)</code>：比如内容类型，内容长度，服务器信息，设置<code>Cookie</code>等；</li>
+<li>响应体：响应体最主要的部分，包含了请求资源的内容，比如网页 HTML 代码，图片二进制数据等。</li>
+</ul>
+<h2 id="简单演示"><a href="#简单演示" class="headerlink" title="简单演示"></a>简单演示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests <span class="comment"># 导入requests库，需要安装</span></div><div class="line"></div><div class="line"><span class="comment"># 模拟成浏览器访问的头</span></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'</span>&#125;</div><div class="line">resp = requests.get(<span class="string">'https://www.baidu.com'</span>,headers=headers)</div><div class="line">print(resp.text) <span class="comment"># 打印出网页源代码</span></div><div class="line">print(resp.status_code) <span class="comment"># 打印出状态码</span></div></pre></td></tr></table></figure>
+<p>运行成功后可以看到打印出来的 html 源代码和 200 状态码了。这就基本上实现了爬虫的<code>Request</code>和<code>Response</code>的过程。</p>
+<h2 id="能抓到什么样的数据？"><a href="#能抓到什么样的数据？" class="headerlink" title="能抓到什么样的数据？"></a>能抓到什么样的数据？</h2><ul>
+<li>网页文本：如 HTML 文档，<code>Ajax</code>加载的<code>Json</code>格式文本等；</li>
+<li>图片，视频等：获取到的是二进制文件，保存为图片或视频格式；</li>
+<li>其他只要能请求到的，都能获取。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">headers = &#123;<span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'</span>&#125;</div><div class="line">resp = requests.get(<span class="string">'http://www.baidu.com/img/baidu_jgylogo3.gif'</span>,headers=headers)</div><div class="line">print(resp.content) <span class="comment"># 二进制文件使用content</span></div><div class="line"><span class="comment"># 保存图片</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">'logo.gif'</span>,<span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">    f.write(resp.content)</div><div class="line">    print(<span class="string">'Ok'</span>)</div></pre></td></tr></table></figure>
+<p>成功运行就可以看到打印出来的图片的二进制数据，可保存成功后打印的 OK，这个时候我们打开文件夹就可以看到下载下来的图片了。这几行代码就简单的演示了爬虫保存文件的过程。</p>
+<h2 id="解析方式有哪些？"><a href="#解析方式有哪些？" class="headerlink" title="解析方式有哪些？"></a>解析方式有哪些？</h2><ul>
+<li>直接处理，比如简单的页面文档，只要去除一些空格的数据；</li>
+<li>Json解析，处理Ajax加载的页面；</li>
+<li>正则表达式；</li>
+<li>BeautifulSoup库；</li>
+<li>PyQuery；</li>
+<li>XPath。</li>
+</ul>
+<p>看到这里，大家是不是已经对爬虫的基本工作原理有了清晰的认识了呢。当然，罗马并不是一天建成的，只要积累了足够多的经验，大家肯定能成为爬虫大神的。</p>
+<p>接下来，我会给大家继续分享一些我在学习爬虫时的经验总结。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>真诚赞赏，手留余香</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="俞坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="俞坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    俞坤
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wyukun.coding.me/Python爬虫一之基本原理.html" title="Python爬虫(1):基本原理">https://wyukun.coding.me/Python爬虫一之基本原理.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/五月的事.html" rel="next" title="五月的事">
+                <i class="fa fa-chevron-left"></i> 五月的事
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Python爬虫二之Requests的基本用法.html" rel="prev" title="Python爬虫(2):Requests的基本用法">
+                Python爬虫(2):Requests的基本用法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -358,6 +576,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -378,8 +600,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -486,6 +717,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是爬虫？"><span class="nav-number">1.</span> <span class="nav-text">什么是爬虫？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬虫的基本流程"><span class="nav-number">2.</span> <span class="nav-text">爬虫的基本流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-发起请求："><span class="nav-number">2.1.</span> <span class="nav-text">1.发起请求：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-获取响应内容："><span class="nav-number">2.2.</span> <span class="nav-text">2.获取响应内容：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-解析内容："><span class="nav-number">2.3.</span> <span class="nav-text">3.解析内容：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-保存数据："><span class="nav-number">2.4.</span> <span class="nav-text">4.保存数据：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Request"><span class="nav-number">3.</span> <span class="nav-text">Request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是Request？"><span class="nav-number">3.1.</span> <span class="nav-text">1.什么是Request？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Request中包含什么？"><span class="nav-number">3.2.</span> <span class="nav-text">2.Request中包含什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Response"><span class="nav-number">4.</span> <span class="nav-text">Response</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是Response？"><span class="nav-number">4.1.</span> <span class="nav-text">1.什么是Response？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Response中包含什么？"><span class="nav-number">4.2.</span> <span class="nav-text">2.Response中包含什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单演示"><span class="nav-number">5.</span> <span class="nav-text">简单演示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#能抓到什么样的数据？"><span class="nav-number">6.</span> <span class="nav-text">能抓到什么样的数据？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析方式有哪些？"><span class="nav-number">7.</span> <span class="nav-text">解析方式有哪些？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -630,10 +877,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
