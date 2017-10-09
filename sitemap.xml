@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wyukun.coding.me/about/index.html</loc>
+    
+    <lastmod>2017-10-09T13:26:49.341Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wyukun.coding.me/tags/index.html</loc>
     
     <lastmod>2017-10-09T12:30:35.284Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://wyukun.coding.me/categories/index.html</loc>
     
     <lastmod>2017-10-09T12:30:27.245Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wyukun.coding.me/about/index.html</loc>
-    
-    <lastmod>2017-10-09T12:30:13.965Z</lastmod>
     
   </url>
   
