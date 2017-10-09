@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,爬虫,Scrapy,网易云音乐爬虫" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Yukun's Notes" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="前两篇文章我们了解了Scrapy的理论知识，那么我们不能做纸上谈兵的赵括。实践才是检验真理的唯一标准。本篇文章我们来抓取网易云音乐的所有音乐及音乐的热评。">
+<meta name="keywords" content="Python,爬虫,Scrapy,网易云音乐爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫(13):Scrapy实战抓取网易云音乐">
+<meta property="og:url" content="https://wyukun.coding.me/2017/07/python-spider-163music/index.html">
+<meta property="og:site_name" content="Yukun&#39;s Notes">
+<meta property="og:description" content="前两篇文章我们了解了Scrapy的理论知识，那么我们不能做纸上谈兵的赵括。实践才是检验真理的唯一标准。本篇文章我们来抓取网易云音乐的所有音乐及音乐的热评。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://imgout.ph.126.net/56902217/music1.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56888108/music2.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56890168/music3.jpg">
+<meta property="og:image" content="http://imgout.ph.126.net/56897110/music4.jpg">
+<meta property="og:updated_time" content="2017-10-09T08:29:08.524Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python爬虫(13):Scrapy实战抓取网易云音乐">
+<meta name="twitter:description" content="前两篇文章我们了解了Scrapy的理论知识，那么我们不能做纸上谈兵的赵括。实践才是检验真理的唯一标准。本篇文章我们来抓取网易云音乐的所有音乐及音乐的热评。">
+<meta name="twitter:image" content="http://imgout.ph.126.net/56902217/music1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wyukun.coding.me/2017/07/python-spider-163music/"/>
+
+
+
+
+
+  <title>Python爬虫(13):Scrapy实战抓取网易云音乐 | Yukun's Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yukun's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">俞坤的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wyukun.coding.me/2017/07/python-spider-163music/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="俞坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yukun's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python爬虫(13):Scrapy实战抓取网易云音乐</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T15:56:38+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"> 阅读次数</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>前两篇文章我们了解了Scrapy的理论知识，那么我们不能做纸上谈兵的赵括。实践才是检验真理的唯一标准。本篇文章我们来抓取网易云音乐的所有音乐及音乐的热评。<br><a id="more"></a></p>
+<h2 id="分析站点"><a href="#分析站点" class="headerlink" title="分析站点"></a>分析站点</h2><p>我们打开浏览器，访问网易云音乐的网页端。如果我们想要抓取到所有的音乐，就得有一个切入口，能够获得到所有的音乐数据。</p>
+<p>那么通过观察页面的导航，我们只能通过获取全部的歌手。但是由于歌手详情页并没有全部音乐这个链接，我们只能获取全部的专辑。在通过全部的专辑获得全部的音乐。</p>
+<h2 id="爬虫流程"><a href="#爬虫流程" class="headerlink" title="爬虫流程"></a>爬虫流程</h2><p>以歌手页为索引页，抓取所有的歌手；<br>通过所有的歌手抓取全部专辑；<br>通过全部专辑抓取所有的音乐；<br>分析所有音乐的Ajax，获得所有热评；<br>将音乐名，歌手，专辑，热评，热评作者，热评赞数保存数据库。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><p><code>scrapy startproject 163music</code></p>
+<h3 id="创建爬虫文件（可以通过命令行创建）："><a href="#创建爬虫文件（可以通过命令行创建）：" class="headerlink" title="创建爬虫文件（可以通过命令行创建）："></a>创建爬虫文件（可以通过命令行创建）：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># spiders/spider.py</span></div><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Spider</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MusicSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">"music"</span></div><div class="line">    allowed_domains = [<span class="string">"163.com"</span>]</div><div class="line">    base_url = <span class="string">'https://music.163.com'</span></div></pre></td></tr></table></figure>
+<h3 id="确定数据名称"><a href="#确定数据名称" class="headerlink" title="确定数据名称"></a>确定数据名称</h3><p>我们先将要保存下来得到数据写到item文件中，虽然这一步不是必须先写，但是我们按照流程来不会错。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#items.py</span></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MusicItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># 我们保存歌曲的id</span></div><div class="line">    id = scrapy.Field()</div><div class="line">    artist = scrapy.Field()</div><div class="line">    album = scrapy.Field()</div><div class="line">    music = scrapy.Field()</div><div class="line">    comments = scrapy.Field()</div></pre></td></tr></table></figure>
+<h3 id="分析索引页"><a href="#分析索引页" class="headerlink" title="分析索引页"></a>分析索引页</h3><p>我们的索引页为歌手页，地址：<code>https://music.163.com/#/discover/artist/cat?id=1001&amp;amp;initial=65</code></p>
+<p><img src="http://imgout.ph.126.net/56902217/music1.jpg" alt="image"></p>
+<p>通过图片结合我们对索引页的观察，我们可以看到左侧比如华语男歌手，欧美男歌手是分类，而歌手下的ABCDE也是一个按姓名的分类。</p>
+<p>通过观察链接可以发现，<code>id</code>就是左侧分类的值，<code>initial</code>是 ABCDE 链接的值。</p>
+<p>我们可以发现 ABCDE 每一个链接是从 65 开始，一直到 90，再加上’其他’链接为 0。这样的规则我们是可以用代码很简单实现的。而左侧的歌手分类的数字相对是不好用代码实现他的规则的。索性他的数目不多，我们一个一个写出来保存集合就可以了。我们将这两个参数写到爬虫类中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MusicSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    name = <span class="string">"music"</span></div><div class="line">    allowed_domains = [<span class="string">"163.com"</span>]</div><div class="line">    base_url = <span class="string">'https://music.163.com'</span></div><div class="line">    ids = [<span class="string">'1001'</span>,<span class="string">'1002'</span>,<span class="string">'1003'</span>,<span class="string">'2001'</span>,<span class="string">'2002'</span>,<span class="string">'2003'</span>,<span class="string">'6001'</span>,<span class="string">'6002'</span>,<span class="string">'6003'</span>,<span class="string">'7001'</span>,<span class="string">'7002'</span>,<span class="string">'7003'</span>,<span class="string">'4001'</span>,<span class="string">'4002'</span>,<span class="string">'4003'</span>]</div><div class="line">    initials = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">65</span>, <span class="number">91</span>)]+[<span class="number">0</span>]</div></pre></td></tr></table></figure>
+<h3 id="起始url"><a href="#起始url" class="headerlink" title="起始url"></a>起始url</h3><p>很显然歌手页有不同的分类，所有起始页不可能是单独的一个<code>url</code>，所以我们要重写<code>start_requests</code>。也就是构建所有的歌手分类页。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">for</span> id <span class="keyword">in</span> self.ids:</div><div class="line">	<span class="keyword">for</span> initial <span class="keyword">in</span> self.initials:</div><div class="line">	    url = <span class="string">'&#123;url&#125;/discover/artist/cat?id=&#123;id&#125;&amp;amp;initial=&#123;initial&#125;'</span>.format(url=self.base_url,id=id,initial=initial)</div><div class="line">		<span class="keyword">yield</span> Request(url, callback=self.parse_index)</div></pre></td></tr></table></figure>
+<p>这一步实现起来逻辑还是很清晰的，循环每一个<code>id</code>，在循环每一个<code>initial</code>，将他们通过<code>.format</code>方法组成<code>url</code>。然后使用<code>yield</code>语法糖，将<code>url</code>回调给索引页解析函数。相信大家在前两篇理论的梳理下，对于这步操作没有什么问题。</p>
+<p>那么我们在<code>parse_index()</code>函数中打印一下<code>Response</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_index</span><span class="params">(self, response)</span>:</span></div><div class="line">    print(response.text)</div></pre></td></tr></table></figure>
+<p>控制台运行爬虫：<code>scrapy crawl music</code></p>
+<p>由于<code>scrapy</code>不支持<code>lde</code>运行，所以如果我们非要想在比如<code>pycharm</code>中运行的话，我们需要编写一个运行程序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 163music/entrypoint.py</span></div><div class="line"><span class="comment"># 注意这个文件在项目的根目录，也就是scrapy.cfg文件所在</span></div><div class="line"><span class="comment"># 这里的music就是爬虫的名字</span></div><div class="line"><span class="keyword">from</span> scrapy.cmdline <span class="keyword">import</span> execute</div><div class="line">execute([<span class="string">'scrapy'</span>, <span class="string">'crawl'</span>, <span class="string">'music'</span>])</div></pre></td></tr></table></figure>
+<p>现在我们在<code>pycharm</code>做运行这个文件就相当于运行爬虫了。</p>
+<p>运行成功，但是我们好像并没有获得到我们想要的数据。这是怎么回事呢？<br>大家如果回忆使用<code>Requests</code>库请求的时候，我们在请求中有时候会添加一些请求头，那么<code>scrapy</code>中我们要在哪里添加呢。</p>
+<p>答案很简单，就是在<code>settings.py</code>文件中。</p>
+<h3 id="添加请求头设置"><a href="#添加请求头设置" class="headerlink" title="添加请求头设置"></a>添加请求头设置</h3><p>我们需要在<code>settings</code>文件中先取消掉<code>DEFAULT_REQUEST_HEADERS</code>的注释，因为<code>scrapy</code>默认我们不需要请求头。我们在里面添加网易云的头部请求，就是我们开发者工具里的数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">DEFAULT_REQUEST_HEADERS = &#123;</div><div class="line">    <span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'</span>,</div><div class="line">    <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate, sdch'</span>,</div><div class="line">    <span class="string">'Accept-Language'</span>: <span class="string">'zh-CN,zh;q=0.8,en;q=0.6'</span>,</div><div class="line">    <span class="string">'Cache-Control'</span>: <span class="string">'no-cache'</span>,</div><div class="line">    <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>,</div><div class="line">    <span class="string">'Cookie'</span>:<span class="string">'_ntes_nuid=5e2135ea19041c08d61bddbb9009de63; _ntes_nnid=a387121ca9ed891dca82492f6c088c57,1483420952257; __utma=187553192.690483437.1489583101.1489583101.1489583101.1; __utmz=187553192.1489583101.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __oc_uuid=ff821060-097f-11e7-8c2a-73421a9a1bc4; mail_psc_fingerprint=032ad52396a72877e07f21386dee35a2; NTES_CMT_USER_INFO=106964635%7C%E6%9C%89%E6%80%81%E5%BA%A6%E7%BD%91%E5%8F%8B06o2qr%7Chttps%3A%2F%2Fsimg.ws.126.net%2Fe%2Fimg5.cache.netease.com%2Ftie%2Fimages%2Fyun%2Fphoto_default_62.png.39x39.100.jpg%7Cfalse%7CbTE1MTUyMzQ3Mjc3QDE2My5jb20%3D; usertrack=c+5+hlkgTIMgjwa+EDUGAg==; _ga=GA1.2.690483437.1489583101; Province=025; City=05278; NTES_PASSPORT=aXWcpL4bYTLQnXY4eO888VlwXt.v922HPG1pBkj.vkeDwsISwc4gjpib7gtylUsoCy.yIGuJPZg7Uq2lTWqIo3A5ddE7eIf5DP_mjdHrg7ky2KFIZHP60ge8g; P_INFO=m15152347277@163.com|1500267468|1|blog|11&amp;amp;10|jis&amp;amp;1499527300&amp;amp;mail163#jis&amp;amp;320800#10#0#0|151277&amp;amp;1|study&amp;amp;blog&amp;amp;photo|15152347277@163.com; UM_distinctid=15d4ee58fc9483-032aae6568b355-333f5902-100200-15d4ee58fca912; NTES_SESS=35juNvuVAClEtPfwjy5rP5GVXVpRFMmwg2ItfudhfLmyGTk4G2l_fIFHi_xsOJTWQrUJvW3JwsMFyepEs0SR6z1_QnKjbQFaesBY9ABy0TVFP_KIiXNgb89wCGe.3_hmKR90f2ybdvNPWqPX8_YesVlIQrWdw5Nfg6KF0EcoVXO3DgV09cJHAeiE_; S_INFO=1500623480|1|0&amp;amp;80##|m15152347277; ANTICSRF=dd45f2a4489d303de869d820a0dadf05; playerid=64643457; JSESSIONID-WYYY=oR0Q0Ce%2Bhldid%2FFtfsiobsg%5Cecyra1qnHBuFFPNBUW%2BbZ3%5C2uq5%2Fqz4VrhRll0%5CaVCfY%2Fg0%2BC47vS%5Cv6rsyuD76tlqWN%2BUryVxph9fZeCmVIDtu5so7vdcdp%2B92hI3A0R5Zm%2Besa5l3ND%5Cz59WOYTY%2FCUjG%2B8gFSGVyzTpMquPQIxyIM%3A1500647790286; _iuqxldmzr_=32; MUSIC_U=f5333454d16d0f0ca5e59b3a82afaabcb107f5e73a4504bae87278f38158d65dbef309e3badc0bfac257abd5a88c5d62dc7e2cf554b1b3fc233a987fb3c42671e386323209b86ec1bf122d59fa1ed6a2; __remember_me=true; __csrf=5cd5b19efc6ea479e298487216162acf; __utma=94650624.776578804.1489210725.1500604214.1500644866.50; __utmb=94650624.28.10.1500644866; __utmc=94650624; __utmz=94650624.1499960824.48.42.utmcsr=yukunweb.com|utmccn=(referral)|utmcmd=referral|utmcct=/412.html'</span>,</div><div class="line">    <span class="string">'DNT'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'Host'</span>: <span class="string">'music.163.com'</span>,</div><div class="line">    <span class="string">'Pragma'</span>: <span class="string">'no-cache'</span>,</div><div class="line">    <span class="string">'Referer'</span>: <span class="string">'http://music.163.com/'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意，网易云音乐的歌曲提取是要我们登录才可以获得数据的，我们直接加上登录后的<code>cookies</code>就可以了。</p>
+<p>现在运行爬虫，如果运行成功，那么大家应该就能看到打印出来的数据了。这说明我们的程序是正确的。</p>
+<h3 id="编写起始页解析函数"><a href="#编写起始页解析函数" class="headerlink" title="编写起始页解析函数"></a>编写起始页解析函数</h3><p>这一步就要使用我们的选择器提取信息了，我们打开开发者工具，我们需要的就是歌手<code>a</code>标签中的<code>href</code>信息。对于还不会使用<code>xpath</code>和<code>css</code>选择器的可以使用<code>Chrome</code>开发者工具，右击该标签，如下图的操作：</p>
+<p><img src="http://imgout.ph.126.net/56888108/music2.jpg" alt="image"></p>
+<p>直接上解析起始页代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 获得所有歌手的url</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_index</span><span class="params">(self, response)</span>:</span></div><div class="line">    artists = response.xpath(<span class="string">'//*[@id="m-artist-box"]/li/div/a/@href'</span>).extract()</div><div class="line">    <span class="keyword">for</span> artist <span class="keyword">in</span> artists:</div><div class="line">	artist_url = self.base_url + <span class="string">'/artist'</span> + <span class="string">'/album?'</span> + artist[<span class="number">8</span>:]</div><div class="line">	<span class="keyword">yield</span> Request(artist_url, callback=self.parse_artist)</div></pre></td></tr></table></figure>
+<p>歌手专辑详情页<code>url</code>实例如：<code>https://music.163.com/#/artist/album?id=6452</code></p>
+<p>我们解析得到<code>href</code>值后，在将他组合成完整的歌手专辑详情页<code>url</code>。然后回调给下一个解析函数。</p>
+<h3 id="提取所有专辑url"><a href="#提取所有专辑url" class="headerlink" title="提取所有专辑url"></a>提取所有专辑url</h3><p>这一步和上一步一样，由于这一步也没什么难点，不过多赘述。上代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 获得所有歌手专辑的url</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_artist</span><span class="params">(self, response)</span>:</span></div><div class="line">    albums = response.xpath(<span class="string">'//*[@id="m-song-module"]/li/div/a[@class="msk"]/@href'</span>).extract()</div><div class="line">    <span class="keyword">for</span> album <span class="keyword">in</span> albums:</div><div class="line">	album_url = self.base_url + album</div><div class="line">	<span class="keyword">yield</span> Request(album_url, callback=self.parse_album)</div></pre></td></tr></table></figure>
+<h3 id="提取所有歌曲"><a href="#提取所有歌曲" class="headerlink" title="提取所有歌曲"></a>提取所有歌曲</h3><p>这一步就有一点不同了，因为如果我们提取了音乐<code>url</code>，那么我们需要的音乐<code>id</code>就在<code>url</code>中。如果我们直接将<code>URL</code>回调给解析音乐页的函数后，我们在后面是获取不到这个<code>id</code>的。大家可以自己观察页面，确定这一步。</p>
+<p>所以我们不仅要把<code>url</code>回调给下一个解析函数，还要把音乐<code>id</code>传给下一个函数。那么大家应该会有疑问，为什么不把<code>id</code>直接保存到<code>item</code>呢。</p>
+<p>这是因为我们需要的数据结构会是这样：</p>
+<p><code>{&#39;id&#39;:123456,&#39;music&#39;:&#39;晴天&#39;,&#39;artist&#39;:&#39;周杰伦&#39;,&#39;album&#39;:&#39;叶美惠&#39;,&#39;comments&#39;:[{&#39;comment_author&#39;:&#39;小明&#39;,&#39;comment_content&#39;:&#39;我爱你&#39;,&#39;comment_like&#39;:&#39;123456&#39;},{...},{}...]}</code></p>
+<p>如果我们现在保存了音乐<code>id</code>，那么后面的信息能否对应我们也不确定。那么怎样才能将数据传给下一个函数呢？</p>
+<p><code>scrapy</code>给我提供了<code>meta</code>参数用来保存我们的数据传给函数，我们来看代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 获得所有专辑音乐的url</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_album</span><span class="params">(self, response)</span>:</span></div><div class="line">    musics = response.xpath(<span class="string">'//ul[@class="f-hide"]/li/a/@href'</span>).extract()</div><div class="line">    <span class="keyword">for</span> music <span class="keyword">in</span> musics:</div><div class="line">	music_id = music[<span class="number">9</span>:]</div><div class="line">	music_url = self.base_url + music</div><div class="line"></div><div class="line">	<span class="keyword">yield</span> Request(music_url, meta=&#123;<span class="string">'id'</span>: music_id&#125;, callback=self.parse_music)</div></pre></td></tr></table></figure>
+<p>像这样我们把组合的<code>URL</code>传给解析函数，也将音乐<code>id</code>传给下一个函数。</p>
+<h3 id="提取音乐信息，分析评论Ajax"><a href="#提取音乐信息，分析评论Ajax" class="headerlink" title="提取音乐信息，分析评论Ajax"></a>提取音乐信息，分析评论Ajax</h3><p>对于提取页面的音乐信息，使用选择器提取就可以了，难的是评论区并不在我们获取的源码中。如果大家有疑惑，可以打印一些音乐详情页的源码。那么评论的信息究竟在哪呢，这是相信大家心里都开始怀疑这是不是<code>Ajax</code>加载的呢。</p>
+<p>为了验证这个疑惑，我们点击评论区的翻页，可以看到到了第二页浏览器的<code>url</code>并没有变化。这个时候基本上可以知道这是<code>ajax</code>加载的页面了。</p>
+<p>我们之前有一篇说过<code>Ajax</code>请求的处理方法，我们这里不多余赘述。打开<code>Chrome</code>开发者工具，点开<code>Network</code>标签的<code>XHR</code>刷新页面，这时候会有几个请求出来。我们一个一个点开看他们的响应内容，发现<code>R_SO_4_186016?csrf_token=</code>请求中包含了评论的信息。数一下热评数在对比页面中的热评信息，完全一致。我们看下面的图片：</p>
+<p><img src="http://imgout.ph.126.net/56890168/music3.jpg" alt="image"></p>
+<p><img src="http://imgout.ph.126.net/56897110/music4.jpg" alt="image"></p>
+<p>通过上面一张图片，红框里框出的<code>Form Data</code>数据，没错，这是一个<code>Post</code>请求信息。接着我们就要将他们构造成字典通过<code>post</code>请求。我们在看图中的<code>referer</code>的url，没错url后面的id就是歌曲的id。上一个函数我们将歌曲id也传过来是不是很方便这一步的处理呢。</p>
+<p>我们需要在之前的请求头中加入每个音乐请求的<code>referer</code>参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DEFAULT_REQUEST_HEADERS[<span class="string">'Referer'</span>] = self.base_url + <span class="string">'/playlist?id='</span> + str(music_id)</div></pre></td></tr></table></figure>
+<p>将<code>Form Data</code>构造字典大家都没问题，构造<code>Ajax</code>请求<code>url</code>就是<code>R_SO_4_</code>后面接上音乐的<code>id</code>。也没问题，那么在<code>scrapy</code>中怎么使用<code>Post</code>请求呢。</p>
+<p>答案就是scrapy的<code>FormRequest</code>方法，我们需要导入他，然后用法和<code>Request</code>一样，我们还需要将这个函数提取的所有音乐信息传给下一个提取热评的函数，然后将所有数据一起传给<code>item</code>。</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 获得音乐信息</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_music</span><span class="params">(self, response)</span>:</span></div><div class="line">    music_id = response.meta[<span class="string">'id'</span>]</div><div class="line">    music = response.xpath(<span class="string">'//div[@class="tit"]/em[@class="f-ff2"]/text()'</span>).extract_first()</div><div class="line">    artist = response.xpath(<span class="string">'//div[@class="cnt"]/p[1]/span/a/text()'</span>).extract_first()</div><div class="line">    album = response.xpath(<span class="string">'//div[@class="cnt"]/p[2]/a/text()'</span>).extract_first()</div><div class="line"></div><div class="line">    data = &#123;</div><div class="line">	<span class="string">'csrf_token'</span>: <span class="string">''</span>,</div><div class="line">	<span class="string">'params'</span>: <span class="string">'Ak2s0LoP1GRJYqE3XxJUZVYK9uPEXSTttmAS+8uVLnYRoUt/Xgqdrt/13nr6OYhi75QSTlQ9FcZaWElIwE+oz9qXAu87t2DHj6Auu+2yBJDr+arG+irBbjIvKJGfjgBac+kSm2ePwf4rfuHSKVgQu1cYMdqFVnB+ojBsWopHcexbvLylDIMPulPljAWK6MR8'</span>,</div><div class="line">	<span class="string">'encSecKey'</span>: <span class="string">'8c85d1b6f53bfebaf5258d171f3526c06980cbcaf490d759eac82145ee27198297c152dd95e7ea0f08cfb7281588cdab305946e01b9d84f0b49700f9c2eb6eeced8624b16ce378bccd24341b1b5ad3d84ebd707dbbd18a4f01c2a007cd47de32f28ca395c9715afa134ed9ee321caa7f28ec82b94307d75144f6b5b134a9ce1a'</span></div><div class="line">    &#125;</div><div class="line">    DEFAULT_REQUEST_HEADERS[<span class="string">'Referer'</span>] = self.base_url + <span class="string">'/playlist?id='</span> + str(music_id)</div><div class="line">    music_comment = <span class="string">'http://music.163.com/weapi/v1/resource/comments/R_SO_4_'</span> + str(music_id)</div><div class="line"></div><div class="line">    <span class="keyword">yield</span> FormRequest(music_comment, meta=&#123;<span class="string">'id'</span>:music_id,<span class="string">'music'</span>:music,<span class="string">'artist'</span>:artist,<span class="string">'album'</span>:album&#125;, \</div><div class="line">					  callback=self.parse_comment, formdata=data)</div></pre></td></tr></table></figure>
+<h3 id="提取热评信息传给item"><a href="#提取热评信息传给item" class="headerlink" title="提取热评信息传给item"></a>提取热评信息传给item</h3><p>这是爬虫部分的最后一步了，这一步从<code>Ajax</code>请求的<code>json</code>数据了提取信息，相信大家都会，就不去多说。我们提取到所有的数据后，就是传给<code>item</code>了。</p>
+<p><code>item</code>的操作和字典是一样的，我们就像保存字典数据一样保存他们就可以了。但是那么多数据写字典那样一步一步的是不是很蠢呢。那有没有方便一点的方法了。这个时候内置的<code>eval</code>方法派上用场，这里不做方法的讲解，用起来很简单，他会动态的获取我们字典的每一个键，然后帮我们保存。我们看代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 获得所有音乐的热评数据</span></div><div class="line"><span class="keyword">import</span> json</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_comment</span><span class="params">(self, response)</span>:</span></div><div class="line">    id = response.meta[<span class="string">'id'</span>]</div><div class="line">    music = response.meta[<span class="string">'music'</span>]</div><div class="line">    artist = response.meta[<span class="string">'artist'</span>]</div><div class="line">    album = response.meta[<span class="string">'album'</span>]</div><div class="line">    result = json.loads(response.text)</div><div class="line">    comments = []</div><div class="line">    <span class="keyword">if</span> <span class="string">'hotComments'</span> <span class="keyword">in</span> result.keys():</div><div class="line">	<span class="keyword">for</span> comment <span class="keyword">in</span> result.get(<span class="string">'hotComments'</span>):</div><div class="line">	    hotcomment_author = comment[<span class="string">'user'</span>][<span class="string">'nickname'</span>]</div><div class="line">	    hotcomment = comment[<span class="string">'content'</span>]</div><div class="line">	    hotcomment_like = comment[<span class="string">'likedCount'</span>]</div><div class="line">	    <span class="comment"># 这里我们将评论的作者头像也保存，如果大家喜欢这个项目，我后面可以做个web端的展现</span></div><div class="line">	    hotcomment_avatar = comment[<span class="string">'user'</span>][<span class="string">'avatarUrl'</span>]</div><div class="line">	    data = &#123;</div><div class="line">		<span class="string">'nickname'</span>: hotcomment_author,</div><div class="line">		<span class="string">'content'</span>: hotcomment,</div><div class="line">		<span class="string">'likedcount'</span>: hotcomment_like,</div><div class="line">		<span class="string">'avatarurl'</span>: hotcomment_avatar</div><div class="line">	    &#125;</div><div class="line">			comments.append(data)</div><div class="line"></div><div class="line">    item = MusicItem()</div><div class="line">    <span class="comment"># 由于eval方法不稳定，具体的可以自己搜索，我们过滤一下错误</span></div><div class="line">    <span class="keyword">for</span> field <span class="keyword">in</span> item.fields:</div><div class="line">	<span class="keyword">try</span>:</div><div class="line">	    item[field] = eval(field)</div><div class="line">	<span class="keyword">except</span>:</div><div class="line">	    print(<span class="string">'Field is not defined'</span>, field)</div><div class="line">    <span class="keyword">yield</span> item</div></pre></td></tr></table></figure>
+<p>最后我们将数据传给<code>Item</code>。</p>
+<h3 id="Pipeline中处理数据"><a href="#Pipeline中处理数据" class="headerlink" title="Pipeline中处理数据"></a>Pipeline中处理数据</h3><p>在<code>Pipeline</code>中处理数据，其实我们这里没什么好对数据做什么改动的，这里我们要对数据做数据库的保存。</p>
+<p>我们需要创建一个<code>mongodb</code>类。然后在<code>settings</code>中将<code>ITEM_PIPELINES</code>的键改为我们创建的<code>mongdb</code>类，由于我们不需要对数据进行改动，所以直接覆盖就好了。为了方便管理和整体架构的清晰，我们也需要在<code>settings</code>中设置我们的数据库信息。具体代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">   <span class="string">'music163.pipelines.MongoPipeline'</span>: <span class="number">300</span>,</div><div class="line">&#125;</div><div class="line"><span class="comment"># 添加数据库信息</span></div><div class="line">MONGO_URI = <span class="string">'localhost'</span></div><div class="line">MONGO_DB = <span class="string">'music163'</span></div></pre></td></tr></table></figure>
+<p>接下来就是写我们的<code>Mongodb</code>类了。首先我们需要给这个类传入两个参数，也就是我们前面在<code>settings</code>文件定义的数据库<code>uri</code>和数据库名，我们对它们进行一个赋值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoPipeline</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, mongo_uri, mongo_db)</span>:</span></div><div class="line">        self.mongo_uri = mongo_uri</div><div class="line">        self.mongo_db = mongo_db&lt;/pre&gt;</div><div class="line">接下来我们定义一个from_crawler类方法，这个方法就相当于将这个类的两个参数通过crawler对象从settings中拿到这两个参数（数据库uri和名称）。</div><div class="line">&lt;pre class="lang:python decode:true "&gt;class MongoPipeline(object):</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, mongo_uri, mongo_db)</span>:</span></div><div class="line">        self.mongo_uri = mongo_uri</div><div class="line">        self.mongo_db = mongo_db</div><div class="line"></div><div class="line"><span class="meta">    @classmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_crawler</span><span class="params">(cls, crawler)</span>:</span></div><div class="line">        <span class="keyword">return</span> cls(</div><div class="line">            mongo_uri=crawler.settings.get(<span class="string">'MONGO_URI'</span>),</div><div class="line">            mongo_db=crawler.settings.get(<span class="string">'MONGO_DB'</span>)</div><div class="line">        )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client = pymongo.MongoClient(self.mongo_uri)</div><div class="line">        self.db = self.client[self.mongo_db]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client.close()</div></pre></td></tr></table></figure>
+<p>这里的<code>@classmethod</code>装饰器是<code>python</code>中比较常用的一个方法，具体操作大家可以参阅相关资料了解他。</p>
+<p>后面的<code>open_spider()</code>和<code>close_spider()</code>方法其实是重定义的一个类方法，意思就是我们在启动爬虫的开始，调用<code>open_spider()</code>方法，在关闭爬虫是调用<code>close_spider()</code>方法。我们给他们添加启动数据库和关闭数据库的操作。</p>
+<p>后面是最重要的方法，<code>process_item()</code>方法就是用来对<code>item</code>进行操作的。我们这里主要就是对数据库进行一个插入操作。</p>
+<p>首先我们需要在<code>items.py</code>文件中加入一个 <code>table_name = &#39;music&#39;</code>的属性，也就是相当于一个数据库表名。这样做方便我们将这个属性传到<code>process_item()</code>方法，我们需要调用数据库的<code>update</code>方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">    self.db[item.table_name].update(&#123;<span class="string">'id'</span>: item.get(<span class="string">'id'</span>)&#125;, &#123;<span class="string">'$set'</span>: dict(item)&#125;, <span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>这个方法有三个参数，第一个参数传入数据库查询的字段，我们使用音乐的<code>id</code>来进行查询。</p>
+<p>第二个参数就是我们的<code>item</code>数据，我们将他转化为字典形式。</p>
+<p>第三个参数至关重要，我们传入<code>True</code>。意思是如果我们查询到相同的数据，我们就做更新操作，如果没有查询到相同的数据就做插入操作。这就相当于我们己做了插入数据库同时有做了去重的操作。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>好了，这样我们的爬虫就完成了，整理完代码运行起来吧。</p>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/Blackyukun/163Music" target="_blank" rel="external">github</a></p>
+<p>谢谢阅读</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>真诚赞赏，手留余香</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="俞坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="俞坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    俞坤
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://wyukun.coding.me/2017/07/python-spider-163music/" title="Python爬虫(13):Scrapy实战抓取网易云音乐">https://wyukun.coding.me/2017/07/python-spider-163music/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/python-spider-Scrapy-component/" rel="next" title="Python爬虫(12):Scrapy组件的用法">
+                <i class="fa fa-chevron-left"></i> Python爬虫(12):Scrapy组件的用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/what-looking-when-read-novels/" rel="prev" title="我看小说的时候我在看什么">
+                我看小说的时候我在看什么 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="俞坤" />
+          <p class="site-author-name" itemprop="name">俞坤</p>
+           
+              <p class="site-description motion-element" itemprop="description">克制力，执行力</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Blackyukun" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/yu-kun-73/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a rel="external nofollow" href="http://www.luckyero.com/" title="玖镜" target="_blank">玖镜</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a rel="external nofollow" href="http://www.liuchaoblog.com/" title="刘超的博客" target="_blank">刘超的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a rel="external nofollow" href="https://cherryml.com/" title="痴情的小五" target="_blank">痴情的小五</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分析站点"><span class="nav-number">1.</span> <span class="nav-text">分析站点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爬虫流程"><span class="nav-number">2.</span> <span class="nav-text">爬虫流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">3.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建项目"><span class="nav-number">3.1.</span> <span class="nav-text">创建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建爬虫文件（可以通过命令行创建）："><span class="nav-number">3.2.</span> <span class="nav-text">创建爬虫文件（可以通过命令行创建）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定数据名称"><span class="nav-number">3.3.</span> <span class="nav-text">确定数据名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析索引页"><span class="nav-number">3.4.</span> <span class="nav-text">分析索引页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#起始url"><span class="nav-number">3.5.</span> <span class="nav-text">起始url</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加请求头设置"><span class="nav-number">3.6.</span> <span class="nav-text">添加请求头设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写起始页解析函数"><span class="nav-number">3.7.</span> <span class="nav-text">编写起始页解析函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取所有专辑url"><span class="nav-number">3.8.</span> <span class="nav-text">提取所有专辑url</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取所有歌曲"><span class="nav-number">3.9.</span> <span class="nav-text">提取所有歌曲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取音乐信息，分析评论Ajax"><span class="nav-number">3.10.</span> <span class="nav-text">提取音乐信息，分析评论Ajax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取热评信息传给item"><span class="nav-number">3.11.</span> <span class="nav-text">提取热评信息传给item</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pipeline中处理数据"><span class="nav-number">3.12.</span> <span class="nav-text">Pipeline中处理数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">4.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目地址"><span class="nav-number">5.</span> <span class="nav-text">项目地址</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">俞坤</span>
+</div>
+
+<div class="powered-by">
+  <a href=http://www.miitbeian.gov.cn/>苏ICP备17028833号</a> 
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a rel="external nofollow" class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"> 访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"> 访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
