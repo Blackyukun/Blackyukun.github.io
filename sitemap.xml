@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wyukun.coding.me/tags/index.html</loc>
+    
+    <lastmod>2017-10-09T12:30:35.284Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wyukun.coding.me/categories/index.html</loc>
+    
+    <lastmod>2017-10-09T12:30:27.245Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://wyukun.coding.me/about/index.html</loc>
+    
+    <lastmod>2017-10-09T12:30:13.965Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://wyukun.coding.me/2017/10/Vue-instance/</loc>
     
     <lastmod>2017-10-09T10:01:05.933Z</lastmod>
@@ -152,27 +173,6 @@
     <loc>https://wyukun.coding.me/2017/07/everything-is-going-to-be-okay/</loc>
     
     <lastmod>2017-10-09T08:14:41.228Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wyukun.coding.me/about/index.html</loc>
-    
-    <lastmod>2017-09-19T11:51:01.160Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wyukun.coding.me/categories/index.html</loc>
-    
-    <lastmod>2017-08-30T08:48:18.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://wyukun.coding.me/tags/index.html</loc>
-    
-    <lastmod>2017-08-30T08:46:24.000Z</lastmod>
     
   </url>
   
