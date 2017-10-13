@@ -78,8 +78,8 @@ menu_icons:
 
 # Schemes
 #scheme: Muse
-scheme: Mist
-#scheme: Pisces
+#scheme: Mist
+scheme: Pisces
 #scheme: Gemini
 
 # ---------------------------------------------------------------
@@ -172,7 +172,7 @@ sidebar:
   b2t: false
 
   # Scroll percent label in b2t button
-  scrollpercent: false
+  scrollpercent: true
   
   # Enable sidebar on narrow view
   onmobile: false
@@ -338,8 +338,8 @@ disqus:
 # changyan
 changyan:
   enable: true
-  appid: cyt4XGBmJ
-  appkey: f8cb3b2d05af5e58a54bdeefc8739796
+  appid: cyt***
+  appkey: f8cb3b2******
 
 # Support for youyan comments system.
 # You can get your uid from http://www.uyan.cc
@@ -429,25 +429,25 @@ rating:
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
-  enable: false
-  app_id: #<app_id>
-  app_key: #<app_key>
+  enable: true
+  app_id: DVs1*****
+  app_key: 1Rf6T****
 
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
   # count values only if the other configs are false
-  enable: true
+  enable: false
   # custom uv span for the whole site
-  site_uv: true
+  site_uv: false
   site_uv_header: <i class="fa fa-user"> 访客数</i>
   site_uv_footer: 人次
   # custom pv span for the whole site
-  site_pv: true
+  site_pv: false
   site_pv_header: <i class="fa fa-eye"> 访问量</i>
   site_pv_footer:
   # custom pv span for one page only
-  page_pv: true
+  page_pv: false
   page_pv_header: <i class="fa fa-eye"> 阅读次数</i>
   page_pv_footer:
 
